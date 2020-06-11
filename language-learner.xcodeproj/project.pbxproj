@@ -14,10 +14,14 @@
 		9F0342BF24916FB700174771 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0342BE24916FB700174771 /* Assets.xcassets */; };
 		9F0342C224916FB700174771 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0342C124916FB700174771 /* Preview Assets.xcassets */; };
 		9F0342C524916FB700174771 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0342C324916FB700174771 /* LaunchScreen.storyboard */; };
+		9F0342CD2492720E00174771 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342CC2492720D00174771 /* StatsView.swift */; };
+		9F0342CF2492726300174771 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342CE2492726300174771 /* HomeView.swift */; };
+		9F0342D1249272C200174771 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D0249272C200174771 /* DeckView.swift */; };
+		9F0342D3249272CB00174771 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D2249272CB00174771 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9F0342B224916FB300174771 /* language-learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "language-learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F0342B224916FB300174771 /* Language Learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Language Learner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0342B524916FB300174771 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0342B724916FB300174771 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9F0342BA24916FB300174771 /* language_learner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = language_learner.xcdatamodel; sourceTree = "<group>"; };
@@ -26,6 +30,10 @@
 		9F0342C124916FB700174771 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9F0342C424916FB700174771 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F0342C624916FB700174771 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F0342CC2492720D00174771 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		9F0342CE2492726300174771 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		9F0342D0249272C200174771 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		9F0342D2249272CB00174771 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +58,7 @@
 		9F0342B324916FB300174771 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9F0342B224916FB300174771 /* language-learner.app */,
+				9F0342B224916FB300174771 /* Language Learner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +69,10 @@
 				9F0342B524916FB300174771 /* AppDelegate.swift */,
 				9F0342B724916FB300174771 /* SceneDelegate.swift */,
 				9F0342BC24916FB300174771 /* ContentView.swift */,
+				9F0342CC2492720D00174771 /* StatsView.swift */,
+				9F0342D0249272C200174771 /* DeckView.swift */,
+				9F0342D2249272CB00174771 /* SettingsView.swift */,
+				9F0342CE2492726300174771 /* HomeView.swift */,
 				9F0342BE24916FB700174771 /* Assets.xcassets */,
 				9F0342C324916FB700174771 /* LaunchScreen.storyboard */,
 				9F0342C624916FB700174771 /* Info.plist */,
@@ -95,7 +107,7 @@
 			);
 			name = "language-learner";
 			productName = "language-learner";
-			productReference = 9F0342B224916FB300174771 /* language-learner.app */;
+			productReference = 9F0342B224916FB300174771 /* Language Learner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +162,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F0342B624916FB300174771 /* AppDelegate.swift in Sources */,
+				9F0342D3249272CB00174771 /* SettingsView.swift in Sources */,
+				9F0342CD2492720E00174771 /* StatsView.swift in Sources */,
 				9F0342BB24916FB300174771 /* language_learner.xcdatamodeld in Sources */,
+				9F0342D1249272C200174771 /* DeckView.swift in Sources */,
+				9F0342CF2492726300174771 /* HomeView.swift in Sources */,
 				9F0342BD24916FB300174771 /* ContentView.swift in Sources */,
 				9F0342B824916FB300174771 /* SceneDelegate.swift in Sources */,
 			);
@@ -293,12 +309,13 @@
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "language-learner/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.language-learner";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Language Learner";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -313,12 +330,13 @@
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "language-learner/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.language-learner";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Language Learner";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
