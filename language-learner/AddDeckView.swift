@@ -61,11 +61,11 @@ struct AddDeckView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }, label: {
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.left").imageScale(.large)
                 Text("Cancel")
             }
             ).alert(isPresented: self.$deckEdited) {
-                Alert(title: Text("Go Back?"), message: Text("All changes will be lost"), primaryButton: .destructive(Text("Cancel")) {
+                Alert(title: Text("Go Back?"), message: Text("All changes will be lost"), primaryButton: .destructive(Text("Go Back")) {
                     self.presentationMode.wrappedValue.dismiss()
                     }, secondaryButton: .default(Text("Keep Editing")))
                 
@@ -89,7 +89,7 @@ struct AddDeckView: View {
             ).alert(isPresented: self.$deckNotComplete) {
                 Alert(title: Text("Deck Not Complete"), message: Text("Make sure to fill in all card and deck fields"))
         })
-            .padding()
+            //.padding()
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
             .animation(.easeOut(duration: 0.1))

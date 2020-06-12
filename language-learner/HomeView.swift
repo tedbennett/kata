@@ -24,7 +24,6 @@ struct HomeView: View {
                 Text("Review Deck")
                     .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 100)
                     .font(.headline)
-                //.border(ShapeStyle())
             }
         }
     }

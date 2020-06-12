@@ -16,7 +16,10 @@ struct DeckDetail: View {
             List(deck.cardArray) { card in
                 CardView(card: card)
             }
-        }
+        }.navigationBarTitle(Text(deck.name))
+        .navigationBarItems(trailing: NavigationLink(destination: AddDeckView()) {
+            Image(systemName: "plus").imageScale(.large)
+        })
     }
 }
 
@@ -25,7 +28,9 @@ struct DeckInfo: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0.0) {
             Text(deck.name).font(.largeTitle)
-            
+                
+            Text("\(deck.cardArray.count) cards - 73% learned - Review due in 3 days")
+            .padding(20)
         }//.frame(minWidth: .infinity, maxWidth: .infinity, minHeight: 0, maxHeight: 200)
     }
     
@@ -35,8 +40,8 @@ struct CardView: View {
     var card: Card
     var body: some View {
         VStack {
-            Text(card.front ?? "?").font(.headline)
-            Text(card.back ?? "?").font(.subheadline)
+            Text(card.front).font(.headline)
+            Text(card.back).font(.subheadline)
         }
     }
 }
