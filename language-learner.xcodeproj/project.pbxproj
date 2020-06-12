@@ -18,6 +18,15 @@
 		9F0342CF2492726300174771 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342CE2492726300174771 /* HomeView.swift */; };
 		9F0342D1249272C200174771 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D0249272C200174771 /* DeckView.swift */; };
 		9F0342D3249272CB00174771 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D2249272CB00174771 /* SettingsView.swift */; };
+		9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D424927BDA00174771 /* DeckDetail.swift */; };
+		9F7D42A624935A71003FA006 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42A524935A71003FA006 /* AddCardView.swift */; };
+		9F7D42BF24938BDD003FA006 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */; };
+		9F7D42C024938BDD003FA006 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42BC24938BDD003FA006 /* Card+CoreDataProperties.swift */; };
+		9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */; };
+		9F7D42C424938C67003FA006 /* Deck+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */; };
+		9F7D42C72493ADC7003FA006 /* HistoryData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */; };
+		9F7D42C82493ADC7003FA006 /* HistoryData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */; };
+		9FCDE8972492A948005D0468 /* AddDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCDE8962492A948005D0468 /* AddDeckView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +43,15 @@
 		9F0342CE2492726300174771 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F0342D0249272C200174771 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		9F0342D2249272CB00174771 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9F0342D424927BDA00174771 /* DeckDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckDetail.swift; sourceTree = "<group>"; };
+		9F7D42A524935A71003FA006 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9F7D42BC24938BDD003FA006 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deck+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deck+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9FCDE8962492A948005D0468 /* AddDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +84,16 @@
 		9F0342B424916FB300174771 /* language-learner */ = {
 			isa = PBXGroup;
 			children = (
+				9FCDE8962492A948005D0468 /* AddDeckView.swift */,
+				9F7D42A524935A71003FA006 /* AddCardView.swift */,
 				9F0342B524916FB300174771 /* AppDelegate.swift */,
 				9F0342B724916FB300174771 /* SceneDelegate.swift */,
 				9F0342BC24916FB300174771 /* ContentView.swift */,
 				9F0342CC2492720D00174771 /* StatsView.swift */,
 				9F0342D0249272C200174771 /* DeckView.swift */,
+				9F7D42B824938BBA003FA006 /* Model */,
 				9F0342D2249272CB00174771 /* SettingsView.swift */,
+				9F0342D424927BDA00174771 /* DeckDetail.swift */,
 				9F0342CE2492726300174771 /* HomeView.swift */,
 				9F0342BE24916FB700174771 /* Assets.xcassets */,
 				9F0342C324916FB700174771 /* LaunchScreen.storyboard */,
@@ -88,6 +110,19 @@
 				9F0342C124916FB700174771 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9F7D42B824938BBA003FA006 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */,
+				9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */,
+				9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */,
+				9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */,
+				9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */,
+				9F7D42BC24938BDD003FA006 /* Card+CoreDataProperties.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,10 +199,19 @@
 				9F0342B624916FB300174771 /* AppDelegate.swift in Sources */,
 				9F0342D3249272CB00174771 /* SettingsView.swift in Sources */,
 				9F0342CD2492720E00174771 /* StatsView.swift in Sources */,
+				9F7D42A624935A71003FA006 /* AddCardView.swift in Sources */,
+				9F7D42C82493ADC7003FA006 /* HistoryData+CoreDataProperties.swift in Sources */,
 				9F0342BB24916FB300174771 /* language_learner.xcdatamodeld in Sources */,
+				9F7D42C024938BDD003FA006 /* Card+CoreDataProperties.swift in Sources */,
 				9F0342D1249272C200174771 /* DeckView.swift in Sources */,
+				9F7D42C424938C67003FA006 /* Deck+CoreDataProperties.swift in Sources */,
+				9F7D42BF24938BDD003FA006 /* Card+CoreDataClass.swift in Sources */,
+				9FCDE8972492A948005D0468 /* AddDeckView.swift in Sources */,
+				9F7D42C72493ADC7003FA006 /* HistoryData+CoreDataClass.swift in Sources */,
 				9F0342CF2492726300174771 /* HomeView.swift in Sources */,
+				9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */,
 				9F0342BD24916FB300174771 /* ContentView.swift in Sources */,
+				9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */,
 				9F0342B824916FB300174771 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,13 +9,33 @@
 import SwiftUI
 
 struct DeckView: View {
+    var decks: FetchedResults<Deck>
     var body: some View {
-        Text("deck")
+        NavigationView {
+            List(decks) { deck in
+                DeckCell(deck: deck)
+            }.navigationBarTitle(Text("Decks"))
+                .navigationBarItems(trailing: NavigationLink(destination: AddDeckView()) {
+                    Image(systemName: "plus").imageScale(.large)
+                })
+        }
     }
 }
 
-struct DeckView_Previews: PreviewProvider {
-    static var previews: some View {
-        DeckView()
+struct DeckCell: View {
+    let deck: Deck
+    var body: some View {
+        return NavigationLink(destination: DeckDetail(deck: deck)) {
+            VStack(alignment: .leading) {
+                Text("\(deck.name) \(deck.language)").font(.headline)
+                Text("\(deck.cardArray.count) cards").font(.subheadline)
+            }
+        }
     }
 }
+
+//struct DeckView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DeckView()
+//    }
+//}

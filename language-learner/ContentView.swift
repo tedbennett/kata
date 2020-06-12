@@ -9,13 +9,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: Deck.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Deck.name, ascending: true)]) var decks: FetchedResults<Deck>
+//    var decks = [DeckTemp(name: "Hangul", language: "🇰🇷", cards: [CardTemp(front: "ka", back: "가", altBack: nil),
+//         CardTemp(front: "ja", back: "자", altBack: nil)])]
     var body: some View {
         TabView {
             HomeView().tabItem {
                 Text("Home")
                 Image(systemName: "house.fill")
             }
-            DeckView().tabItem {
+            DeckView(decks: decks).tabItem {
                 Text("Decks")
                 Image(systemName: "rectangle.fill.on.rectangle.angled.fill")
             }
