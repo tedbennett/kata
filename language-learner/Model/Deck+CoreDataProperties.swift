@@ -29,6 +29,11 @@ extension Deck : Identifiable {
         let cardSet = cards as? Set<Card> ?? []
         return Array(cardSet)
     }
+    
+    public var historyArray : [ReviewRecords] {
+        let historySet = history as? Set<ReviewRecords> ?? []
+        return Array(historySet)
+    }
 
 }
 
@@ -53,10 +58,10 @@ extension Deck {
 extension Deck {
 
     @objc(addHistoryObject:)
-    @NSManaged public func addToHistory(_ value: HistoryData)
+    @NSManaged public func addToHistory(_ value: ReviewRecords)
 
     @objc(removeHistoryObject:)
-    @NSManaged public func removeFromHistory(_ value: HistoryData)
+    @NSManaged public func removeFromHistory(_ value: ReviewRecords)
 
     @objc(addHistory:)
     @NSManaged public func addToHistory(_ values: NSSet)

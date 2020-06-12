@@ -9,35 +9,49 @@
 import SwiftUI
 
 struct DeckDetail: View {
+    @Environment(\.managedObjectContext) private var managedObjectContext
     @Environment(\.presentationMode) var presentation
     @State var showModalView = false
-    @State var deck: Deck
+    @State var showActionSheet = false
+    @ObservedObject var deck: Deck
+    
     var body: some View {
         VStack {
-            DeckInfo(deck: deck)
-            List(deck.cardArray) { card in
-                CardView(card: card)
+            VStack(alignment: .center) {
+                Circle()
+                    .fill(Color.clear)
+                    .frame(width: 150, height: 150)
+                Text("\(deck.cardArray.count) cards - 73% learned - Review due in 3 days")
+                    .padding(20)
+            }
+            List{
+                ForEach(deck.cardArray, id: \.self) { card in
+                    CardView(card: card)
+                }.onDelete(perform: { idxSet in
+                    let card = self.deck.cardArray[idxSet.first!]
+                    self.managedObjectContext.delete(card)
+                    try! self.managedObjectContext.save()
+                })
             }
         }.navigationBarTitle(Text(deck.name))
-            .navigationBarItems(trailing: Button(action: {
-                self.showModalView.toggle()
-            }, label: {
-                Image(systemName: "plus").imageScale(.large)
-            }).sheet(isPresented: $showModalView) {
-                AddCardModalView(parentDeck: self.$deck)
-            })
+            .navigationBarItems(trailing:
+                HStack { Button(action: {
+                    self.showActionSheet = true
+                }, label: {
+                    Image(systemName: "ellipsis").imageScale(.large)
+                }).actionSheet(isPresented: $showActionSheet) {
+                    ActionSheet(title: Text(""), buttons: [.default(Text("Review this deck")),
+                                                           .default(Text("Stats for this deck")),
+                                                           .destructive(Text("Delete Deck"))])
+                    }
+                    Button(action: {
+                    self.showModalView.toggle()
+                }, label: {
+                    Image(systemName: "plus").imageScale(.large)
+                }).sheet(isPresented: $showModalView) {
+                    AddCardModalView(parentDeck: self.deck)
+                }})
     }
-}
-
-struct DeckInfo: View {
-    var deck : Deck
-    var body: some View {
-        VStack(alignment: .center) {
-            Text("\(deck.cardArray.count) cards - 73% learned - Review due in 3 days")
-                .padding(20)
-        }
-    }
-    
 }
 
 struct CardView: View {
@@ -65,7 +79,7 @@ struct AddCardModalView: View {
     @State private var back = ""
     @State private var failedSave = false
     
-    @Binding var parentDeck : Deck
+    var parentDeck : Deck
     
     var body: some View {
         NavigationView {
@@ -77,8 +91,8 @@ struct AddCardModalView: View {
                 }
             }.navigationBarTitle(Text("Add New Card"))
                 .navigationBarItems(leading: Button(action: {
-                                        self.presentationMode.wrappedValue.dismiss()
-                                    }, label: {Text("Cancel")}),
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Cancel")}),
                                     trailing: Button(action: {
                                         if (self.front == "") || (self.back == "") {
                                             self.failedSave = true
@@ -105,3 +119,46 @@ struct AddCardModalView: View {
 }
 
 
+
+//private func createPercentageWheel(score : Float) -> CAShapeLayer {
+//
+//    let shapeLayer = CAShapeLayer()
+//    let finalAngle = (2 * CGFloat.pi * CGFloat(score)) - (CGFloat.pi / 2)
+//    let centerPoint = CGPoint(x: percentageWheelView.bounds.midX, y: percentageWheelView.bounds.midY)
+//    let circularPath = UIBezierPath(arcCenter: centerPoint, radius: 80, startAngle: -CGFloat.pi / 2, endAngle: finalAngle, clockwise: true)
+//    shapeLayer.path = circularPath.cgPath
+//
+//    if score > 0.8 {
+//        shapeLayer.strokeColor = UIColor.systemGreen.cgColor
+//    } else if score > 0.5 {
+//        shapeLayer.strokeColor = UIColor.systemOrange.cgColor
+//    } else {
+//        shapeLayer.strokeColor = UIColor.systemRed.cgColor
+//    }
+//    shapeLayer.fillColor = UIColor.clear.cgColor
+//    shapeLayer.lineWidth = 10
+//    shapeLayer.lineCap = CAShapeLayerLineCap.round
+//    shapeLayer.strokeEnd = 0
+//
+//    let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+//    basicAnimation.toValue = 1
+//    basicAnimation.duration = 1.2
+//
+//    basicAnimation.fillMode = CAMediaTimingFillMode.forwards
+//    basicAnimation.isRemovedOnCompletion = false
+//    shapeLayer.add(basicAnimation, forKey: "percentageAnimation")
+//    return shapeLayer
+//}
+//
+//private func createTrackWheel() -> CAShapeLayer {
+//    let shapeLayer = CAShapeLayer()
+//    let centerPoint = CGPoint(x: percentageWheelView.bounds.midX, y: percentageWheelView.bounds.midY)
+//    let circularPath = UIBezierPath(arcCenter: centerPoint, radius: 80, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+//    shapeLayer.path = circularPath.cgPath
+//
+//    shapeLayer.strokeColor = UIColor.systemGray.cgColor
+//    shapeLayer.fillColor = UIColor.clear.cgColor
+//    shapeLayer.lineWidth = 10
+//    shapeLayer.opacity = 0.2
+//    return shapeLayer
+//}

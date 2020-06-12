@@ -1,5 +1,5 @@
 //
-//  HistoryData+CoreDataClass.swift
+//  ReviewRecords+CoreDataClass.swift
 //  language-learner
 //
 //  Created by Ted Bennett on 12/06/2020.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(HistoryData)
-public class HistoryData: NSManagedObject {
+@objc(ReviewRecords)
+public class ReviewRecords: NSManagedObject {
 
 }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct DeckView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
     var decks: FetchedResults<Deck>
     var body: some View {
         NavigationView {
@@ -23,7 +24,7 @@ struct DeckView: View {
 }
 
 struct DeckCell: View {
-    let deck: Deck
+    @ObservedObject var deck: Deck
     var body: some View {
         return NavigationLink(destination: DeckDetail(deck: deck)) {
             VStack(alignment: .leading) {

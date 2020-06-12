@@ -7,6 +7,11 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Deck" inverseName="cards" inverseEntity="Deck"/>
     </entity>
+    <entity name="CardScore" representedClassName="CardScore" syncable="YES">
+        <attribute name="correct" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReviewRecords" inverseName="scores" inverseEntity="ReviewRecords"/>
+    </entity>
     <entity name="Deck" representedClassName="Deck" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -15,17 +20,17 @@
         <attribute name="language" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="parent" inverseEntity="Card"/>
-        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoryData" inverseName="parent" inverseEntity="HistoryData"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReviewRecords" inverseName="parent" inverseEntity="ReviewRecords"/>
     </entity>
-    <entity name="HistoryData" representedClassName="HistoryData" syncable="YES">
-        <attribute name="cardsCorrect" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="cardsReviewed" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="ReviewRecords" representedClassName="ReviewRecords" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Deck" inverseName="history" inverseEntity="Deck"/>
+        <relationship name="scores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardScore" inverseName="parent" inverseEntity="CardScore"/>
     </entity>
     <elements>
         <element name="Card" positionX="-54" positionY="18" width="128" height="118"/>
         <element name="Deck" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="HistoryData" positionX="-36" positionY="63" width="128" height="103"/>
+        <element name="ReviewRecords" positionX="-36" positionY="63" width="128" height="88"/>
+        <element name="CardScore" positionX="-54" positionY="54" width="128" height="88"/>
     </elements>
 </model>

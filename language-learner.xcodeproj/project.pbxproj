@@ -23,9 +23,13 @@
 		9F7D42C024938BDD003FA006 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42BC24938BDD003FA006 /* Card+CoreDataProperties.swift */; };
 		9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */; };
 		9F7D42C424938C67003FA006 /* Deck+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */; };
-		9F7D42C72493ADC7003FA006 /* HistoryData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */; };
-		9F7D42C82493ADC7003FA006 /* HistoryData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */; };
 		9FCDE8972492A948005D0468 /* AddDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCDE8962492A948005D0468 /* AddDeckView.swift */; };
+		9FFEB0602494069E000EC266 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB05F2494069E000EC266 /* ReviewView.swift */; };
+		9FFEB06224942025000EC266 /* FinishReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB06124942025000EC266 /* FinishReviewView.swift */; };
+		9FFEB06724942419000EC266 /* CardScore+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB06324942419000EC266 /* CardScore+CoreDataClass.swift */; };
+		9FFEB06824942419000EC266 /* CardScore+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB06424942419000EC266 /* CardScore+CoreDataProperties.swift */; };
+		9FFEB06924942419000EC266 /* ReviewRecords+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB06524942419000EC266 /* ReviewRecords+CoreDataClass.swift */; };
+		9FFEB06A24942419000EC266 /* ReviewRecords+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB06624942419000EC266 /* ReviewRecords+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,9 +51,13 @@
 		9F7D42BC24938BDD003FA006 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deck+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deck+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9FCDE8962492A948005D0468 /* AddDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeckView.swift; sourceTree = "<group>"; };
+		9FFEB05F2494069E000EC266 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		9FFEB06124942025000EC266 /* FinishReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishReviewView.swift; sourceTree = "<group>"; };
+		9FFEB06324942419000EC266 /* CardScore+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardScore+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9FFEB06424942419000EC266 /* CardScore+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardScore+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9FFEB06524942419000EC266 /* ReviewRecords+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewRecords+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9FFEB06624942419000EC266 /* ReviewRecords+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewRecords+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +90,8 @@
 		9F0342B424916FB300174771 /* language-learner */ = {
 			isa = PBXGroup;
 			children = (
+				9FFEB05F2494069E000EC266 /* ReviewView.swift */,
+				9FFEB06124942025000EC266 /* FinishReviewView.swift */,
 				9FCDE8962492A948005D0468 /* AddDeckView.swift */,
 				9F0342D424927BDA00174771 /* DeckDetail.swift */,
 				9F0342BC24916FB300174771 /* ContentView.swift */,
@@ -112,8 +122,10 @@
 		9F7D42B824938BBA003FA006 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9F7D42C52493ADC7003FA006 /* HistoryData+CoreDataClass.swift */,
-				9F7D42C62493ADC7003FA006 /* HistoryData+CoreDataProperties.swift */,
+				9FFEB06324942419000EC266 /* CardScore+CoreDataClass.swift */,
+				9FFEB06424942419000EC266 /* CardScore+CoreDataProperties.swift */,
+				9FFEB06524942419000EC266 /* ReviewRecords+CoreDataClass.swift */,
+				9FFEB06624942419000EC266 /* ReviewRecords+CoreDataProperties.swift */,
 				9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */,
 				9F7D42C224938C67003FA006 /* Deck+CoreDataProperties.swift */,
 				9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */,
@@ -193,20 +205,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FFEB06A24942419000EC266 /* ReviewRecords+CoreDataProperties.swift in Sources */,
 				9F0342B624916FB300174771 /* AppDelegate.swift in Sources */,
 				9F0342D3249272CB00174771 /* SettingsView.swift in Sources */,
 				9F0342CD2492720E00174771 /* StatsView.swift in Sources */,
-				9F7D42C82493ADC7003FA006 /* HistoryData+CoreDataProperties.swift in Sources */,
 				9F0342BB24916FB300174771 /* language_learner.xcdatamodeld in Sources */,
 				9F7D42C024938BDD003FA006 /* Card+CoreDataProperties.swift in Sources */,
 				9F0342D1249272C200174771 /* DeckView.swift in Sources */,
 				9F7D42C424938C67003FA006 /* Deck+CoreDataProperties.swift in Sources */,
 				9F7D42BF24938BDD003FA006 /* Card+CoreDataClass.swift in Sources */,
 				9FCDE8972492A948005D0468 /* AddDeckView.swift in Sources */,
-				9F7D42C72493ADC7003FA006 /* HistoryData+CoreDataClass.swift in Sources */,
 				9F0342CF2492726300174771 /* HomeView.swift in Sources */,
+				9FFEB06924942419000EC266 /* ReviewRecords+CoreDataClass.swift in Sources */,
+				9FFEB06724942419000EC266 /* CardScore+CoreDataClass.swift in Sources */,
 				9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */,
+				9FFEB06824942419000EC266 /* CardScore+CoreDataProperties.swift in Sources */,
 				9F0342BD24916FB300174771 /* ContentView.swift in Sources */,
+				9FFEB0602494069E000EC266 /* ReviewView.swift in Sources */,
+				9FFEB06224942025000EC266 /* FinishReviewView.swift in Sources */,
 				9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */,
 				9F0342B824916FB300174771 /* SceneDelegate.swift in Sources */,
 			);
