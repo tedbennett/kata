@@ -11,17 +11,17 @@ import SwiftUI
 private let flags = ["🇰🇷", "🇯🇵", "🇨🇳", "🇪🇸", "🇫🇷", "🇮🇹", "🏳️"]
 
 struct AddDeckView: View {
+    // Makes view scroll on opening keyboard
     @ObservedObject private var keyboard = KeyboardResponder()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    // Flags to determine whether to show alerts when the user tries to leave/save
     @State private var deckNotComplete = false
     @State private var deckEdited = false
     
     @State private var deck = TempDeck()
     
     var body: some View {
-        //VStack {
-        
         Form {
             Section(header: Text("Details").font(.headline)) {
                 TextField("Name", text: $deck.name)
@@ -89,7 +89,6 @@ struct AddDeckView: View {
             ).alert(isPresented: self.$deckNotComplete) {
                 Alert(title: Text("Deck Not Complete"), message: Text("Make sure to fill in all card and deck fields"))
         })
-            //.padding()
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
             .animation(.easeOut(duration: 0.1))
@@ -122,6 +121,8 @@ func saveDeck(deck: TempDeck) {
         print(error.localizedDescription)
     }
 }
+
+// temporary data structures used before commiting to core data
 
 struct TempDeck {
     var name = ""
