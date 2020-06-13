@@ -10,24 +10,39 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @State var isActive = false
     var decks: FetchedResults<Deck>
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: HomeDecksView(decks: self.decks)) {
-                    VStack(alignment: .leading) {
+                Spacer()
+                NavigationLink(destination: ReviewView(deck: self.decks.first!, cards: self.decks.first!.cardArray.shuffled())) {
+                    ZStack {
+                        Rectangle().frame(width:250 , height: 100)
+                            .opacity(0.3)
+                            .foregroundColor(Color(UIColor.gray))
+                
                         Text("Review Last Deck")
                             .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 100)
+                            .multilineTextAlignment(.center)
                             .font(.largeTitle)
-                    }
+                    }.cornerRadius(10)
+                }.isDetailLink(false)
+                Spacer()
+                NavigationLink(destination: HomeDecksView(decks: self.decks), isActive: self.$isActive) {
+                    ZStack {
+                        Rectangle().frame(width:250 , height: 100)
+                            .opacity(0.3)
+                            .foregroundColor(Color(UIColor.gray))
+                        
+                        Text("Review Decks")
+                            .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 100)
+                            .multilineTextAlignment(.center)
+                            .font(.largeTitle)
+                    }.cornerRadius(10)
+                    
                 }
-                Button(action: {
-                    print("Button tapped")
-                }) {
-                    Text("Review Decks...")
-                        .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 100)
-                        .font(.largeTitle)
-                }
+                Spacer()
             }.navigationBarTitle("Home")
         }
     }
@@ -40,7 +55,8 @@ struct HomeView: View {
 //}
 
 struct HomeDecksView: View {
-    //@Environment(\.managedObjectContext) var managedObjectContext
+
+    @State var isActive = false
     var decks: FetchedResults<Deck>
     var body: some View {
         List(decks) { deck in

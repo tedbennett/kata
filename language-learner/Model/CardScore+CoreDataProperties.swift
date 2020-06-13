@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension CardScore {
+extension CardScore: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CardScore> {
         return NSFetchRequest<CardScore>(entityName: "CardScore")
