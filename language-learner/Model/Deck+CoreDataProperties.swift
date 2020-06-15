@@ -2,7 +2,7 @@
 //  Deck+CoreDataProperties.swift
 //  language-learner
 //
-//  Created by Ted Bennett on 12/06/2020.
+//  Created by Ted Bennett on 15/06/2020.
 //  Copyright © 2020 Ted Bennett. All rights reserved.
 //
 //
@@ -11,28 +11,27 @@ import Foundation
 import CoreData
 
 
-extension Deck : Identifiable {
+extension Deck: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Deck> {
         return NSFetchRequest<Deck>(entityName: "Deck")
     }
 
-    @NSManaged public var id: UUID
-    @NSManaged public var name: String
-    @NSManaged public var language: String
     @NSManaged public var desc: String?
-    @NSManaged public var author: String?
+    @NSManaged public var id: UUID
+    @NSManaged public var language: Int16
+    @NSManaged public var name: String
     @NSManaged public var cards: NSSet?
-    @NSManaged public var history: NSSet?
+    @NSManaged public var reviews: NSSet?
     
     public var cardArray : [Card] {
         let cardSet = cards as? Set<Card> ?? []
         return Array(cardSet)
     }
     
-    public var historyArray : [ReviewRecords] {
-        let historySet = history as? Set<ReviewRecords> ?? []
-        return Array(historySet)
+    public var reviewsArray : [Review] {
+        let reviewsSet = reviews as? Set<Review> ?? []
+        return Array(reviewsSet)
     }
 
 }
@@ -54,19 +53,19 @@ extension Deck {
 
 }
 
-// MARK: Generated accessors for history
+// MARK: Generated accessors for reviews
 extension Deck {
 
-    @objc(addHistoryObject:)
-    @NSManaged public func addToHistory(_ value: ReviewRecords)
+    @objc(addReviewsObject:)
+    @NSManaged public func addToReviews(_ value: Review)
 
-    @objc(removeHistoryObject:)
-    @NSManaged public func removeFromHistory(_ value: ReviewRecords)
+    @objc(removeReviewsObject:)
+    @NSManaged public func removeFromReviews(_ value: Review)
 
-    @objc(addHistory:)
-    @NSManaged public func addToHistory(_ values: NSSet)
+    @objc(addReviews:)
+    @NSManaged public func addToReviews(_ values: NSSet)
 
-    @objc(removeHistory:)
-    @NSManaged public func removeFromHistory(_ values: NSSet)
+    @objc(removeReviews:)
+    @NSManaged public func removeFromReviews(_ values: NSSet)
 
 }

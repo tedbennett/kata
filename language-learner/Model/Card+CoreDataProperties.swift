@@ -20,7 +20,6 @@ extension Card: Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var front: String
     @NSManaged public var back: String
-    //@NSManaged public var backAlt: String?
 
     @NSManaged public var parent: Deck
 

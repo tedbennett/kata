@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-private let flags = ["🇰🇷", "🇯🇵", "🇨🇳", "🇪🇸", "🇫🇷", "🇮🇹", "🏳️"]
+private let flags: [String] = Array(languageFlags.keys)
 
 struct AddDeckView: View {
     // Makes view scroll on opening keyboard
@@ -102,9 +102,9 @@ func saveDeck(deck: TempDeck) {
     newDeck.id = UUID()
     newDeck.name = deck.name
     if let idx = deck.languageIndex {
-        newDeck.language = flags[idx]
+        newDeck.language = (languageFlags[flags[idx]] ?? .other).rawValue
     } else {
-        newDeck.language = "🏳️"
+        newDeck.language = Language.other.rawValue
     }
     newDeck.desc = deck.description
     for card in deck.cards {

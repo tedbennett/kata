@@ -46,12 +46,12 @@ struct DeckDetail: View {
                                                            .destructive(Text("Delete Deck"))])
                     }
                     Button(action: {
-                    self.showModalView.toggle()
-                }, label: {
-                    Image(systemName: "plus").imageScale(.large)
-                }).sheet(isPresented: $showModalView) {
-                    AddCardModalView(parentDeck: self.deck)
-                }})
+                        self.showModalView.toggle()
+                    }, label: {
+                        Image(systemName: "plus").imageScale(.large)
+                    }).sheet(isPresented: $showModalView) {
+                        AddCardModalView(parentDeck: self.deck)
+                    }})
     }
 }
 
@@ -88,7 +88,7 @@ struct AddCardModalView: View {
     
     init(parentDeck: Deck) {
         self.parentDeck = parentDeck
-        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languages[parentDeck.language] ?? .en)
+        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languageTranslateCodes[Language(rawValue: parentDeck.language) ?? .other]!)
         translator = NaturalLanguage.naturalLanguage().translator(options: options)
         conditions = ModelDownloadConditions(
             allowsCellularAccess: false,
@@ -116,7 +116,6 @@ struct AddCardModalView: View {
                                 guard error == nil, let translatedText = translatedText else {
                                     print(error!.localizedDescription)
                                     return
-                                    
                                 }
                                 
                                 // Translation succeeded.
@@ -135,40 +134,44 @@ struct AddCardModalView: View {
                 }.disabled(self.suggestion == nil)
                 
             }.navigationBarTitle(Text("Add New Card"))
-                .navigationBarItems(leading: Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {Text("Cancel")}),
-                                    trailing: Button(action: {
-                                        if (self.front == "") || (self.back == "") {
-                                            self.failedSave = true
-                                            return
-                                        }
-                                        let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                                        let card = Card(context: viewContext)
-                                        card.front = self.front
-                                        card.back = self.back
-                                        card.id = UUID()
-                                        card.parent = self.parentDeck
-                                        
-                                        do {
-                                            try viewContext.save()
-                                            print("Order saved.")
-                                        } catch {
-                                            print(error.localizedDescription)
-                                        }
-                                        self.presentationMode.wrappedValue.dismiss()
-                                    }, label: {Text("Save")}))
+                .navigationBarItems(
+                    leading: Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {Text("Cancel")}),
+                    trailing: Button(action: {
+                        if (self.front == "") || (self.back == "") {
+                            self.failedSave = true
+                            return
+                        }
+                        let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                        let card = Card(context: viewContext)
+                        card.front = self.front
+                        card.back = self.back
+                        card.id = UUID()
+                        card.parent = self.parentDeck
+                        
+                        do {
+                            try viewContext.save()
+                            print("Order saved.")
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {Text("Save")}))
             
         }
     }
 }
 
-let languages = [
-    "🇰🇷": TranslateLanguage.ko,
-    "🇯🇵": TranslateLanguage.ja,
-    //"🇨🇳": TranslateLanguage.chinese,
-    "🇪🇸": TranslateLanguage.es,
-    "🇫🇷": TranslateLanguage.fr,
-    "🇮🇹": TranslateLanguage.it
+let languageTranslateCodes: [Language:TranslateLanguage] = [
+    .english: TranslateLanguage.en,
+    .japanese: TranslateLanguage.ja,
+    .korean: TranslateLanguage.ko,
+    .chinese: TranslateLanguage.zh,
+    .spanish: TranslateLanguage.es,
+    .italian: TranslateLanguage.it,
+    .french: TranslateLanguage.fr,
+    .german: TranslateLanguage.de,
+    .other: TranslateLanguage.en
 ]
 

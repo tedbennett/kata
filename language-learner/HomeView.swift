@@ -16,6 +16,7 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 Spacer()
+                if self.decks.first != nil {
                 NavigationLink(destination: ReviewView(deck: self.decks.first!, cards: self.decks.first!.cardArray.shuffled())) {
                     ZStack {
                         Rectangle().frame(width:250 , height: 100)
@@ -28,6 +29,13 @@ struct HomeView: View {
                             .font(.largeTitle)
                     }.cornerRadius(10)
                 }.isDetailLink(false)
+                } else {
+                    Button(action: {}, label: { Text("Review Last Deck")
+                        .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 100)
+                        .multilineTextAlignment(.center)
+                        .font(.largeTitle)
+                    })
+                }
                 Spacer()
                 NavigationLink(destination: HomeDecksView(decks: self.decks), isActive: self.$isActive) {
                     ZStack {

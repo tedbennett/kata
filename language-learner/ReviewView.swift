@@ -39,7 +39,7 @@ struct ReviewView: View {
                     Spacer()
                     Text(currentCard.front).font(.largeTitle).animation(.linear)
                     Spacer()
-                    SATextField(tag: 0, placeholder: "", changeHandler: { (newString) in
+                    CustomTextField(tag: 0, language: Language(rawValue: deck.language) ?? .other, placeholder: "", changeHandler: { (newString) in
                         self.textField = newString
                     }, onCommitHandler: {
                         self.scores.append(ReviewResult(id: self.currentCard.id, correct: self.textField == self.currentCard.back, front: self.currentCard.front, back: self.currentCard.back))
@@ -47,21 +47,27 @@ struct ReviewView: View {
                             self.textField = ""
                             self.currentIdx += 1
                         } else {
-                            let reviewRecord = ReviewRecords(context: self.managedObjectContext)
-                            reviewRecord.date = Date()
-                            reviewRecord.parent = self.deck
-                            for score in self.scores {
-                                let cardScore = CardScore(context: self.managedObjectContext)
-                                cardScore.correct = score.correct
-                                cardScore.id = score.id
-                                cardScore.parent = reviewRecord
+                            let calendar = Calendar.current
+                            // If deck has been reviewed, update db
+                            if let review = self.deck.reviewsArray.filter({ $0.date == calendar.startOfDay(for:Date()) }).first {
+                                review.numCards += Int16(self.cards.count)
+                                review.score += self.totalScore
+                            } else {
+                                //otherwise new db entry
+                                let review = Review(context: self.managedObjectContext)
+                            
+                                review.date = calendar.startOfDay(for:Date())
+                                review.numCards = Int16(self.cards.count)
+                                review.score = self.totalScore
+                                review.parent = self.deck
                             }
+ 
                             
                             try! self.managedObjectContext.save()
                             
                             self.reviewFinished = true
                         }
-                    })
+                        })
                     Spacer()
                     Spacer()
 
@@ -133,58 +139,4 @@ struct ReviewResult: Identifiable {
 //}
 
 
-class WrappableTextField: UITextField, UITextFieldDelegate {
-    var textFieldChangedHandler: ((String)->Void)?
-    var onCommitHandler: (()->Void)?
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        textField.text = ""
-        onCommitHandler?()
-        return true
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let currentValue = textField.text as NSString? {
-            let proposedValue = currentValue.replacingCharacters(in: range, with: string)
-            textFieldChangedHandler?(proposedValue as String)
-        }
-        return true
-    }
-
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
-struct SATextField: UIViewRepresentable {
-    private let tmpView = WrappableTextField()
-    
-    //var exposed to SwiftUI object init
-    var tag:Int = 0
-    var placeholder:String?
-    var changeHandler:((String)->Void)?
-    var onCommitHandler:(()->Void)?
-    
-    func makeUIView(context: UIViewRepresentableContext<SATextField>) -> WrappableTextField {
-        tmpView.tag = tag
-        tmpView.becomeFirstResponder()
-        tmpView.delegate = tmpView
-        tmpView.placeholder = placeholder
-        tmpView.textAlignment = .center
-        tmpView.autocorrectionType = .no
-        tmpView.returnKeyType = .done
-        tmpView.font = UIFont.systemFont(ofSize: 32.0)
-        tmpView.onCommitHandler = onCommitHandler
-        tmpView.textFieldChangedHandler = changeHandler
-        return tmpView
-    }
-    
-    func updateUIView(_ uiView: WrappableTextField, context: UIViewRepresentableContext<SATextField>) {
-        uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-    }
-}
