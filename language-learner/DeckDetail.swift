@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct DeckDetail: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
@@ -78,17 +79,61 @@ struct AddCardModalView: View {
     @State private var front = ""
     @State private var back = ""
     @State private var failedSave = false
+    //@State private var suggestions = [String]()
+    @State private var suggestion: String?
     
     var parentDeck : Deck
+    var translator : Translator
+    var conditions : ModelDownloadConditions
+    
+    init(parentDeck: Deck) {
+        self.parentDeck = parentDeck
+        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languages[parentDeck.language] ?? .en)
+        translator = NaturalLanguage.naturalLanguage().translator(options: options)
+        conditions = ModelDownloadConditions(
+            allowsCellularAccess: false,
+            allowsBackgroundDownloading: true
+        )
+        translator.downloadModelIfNeeded(with: conditions) { error in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text(""), footer: Text("Make sure both fields are filled in").foregroundColor(failedSave ? .red : .clear)) {
-                    TextField("Front", text: $front)
+                    TextField("Front", text: $front, onCommit: {
+                        self.translator.downloadModelIfNeeded(with: self.conditions) { error in
+                            guard error == nil else {
+                                print(error!.localizedDescription)
+                                return
+                            }
+                            self.translator.translate(self.front) { translatedText, error in
+                                guard error == nil, let translatedText = translatedText else {
+                                    print(error!.localizedDescription)
+                                    return
+                                    
+                                }
+                                
+                                // Translation succeeded.
+                                self.suggestion = translatedText
+                            }
+                        }
+                        
+                    })
                     TextField("Back", text: $back)
                     
                 }
+                Section(header: Text("Suggested Translation")) {
+                    if suggestion != nil {
+                        Text(suggestion!)
+                    }
+                }.disabled(self.suggestion == nil)
+                
             }.navigationBarTitle(Text("Add New Card"))
                 .navigationBarItems(leading: Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
@@ -117,4 +162,13 @@ struct AddCardModalView: View {
         }
     }
 }
+
+let languages = [
+    "🇰🇷": TranslateLanguage.ko,
+    "🇯🇵": TranslateLanguage.ja,
+    //"🇨🇳": TranslateLanguage.chinese,
+    "🇪🇸": TranslateLanguage.es,
+    "🇫🇷": TranslateLanguage.fr,
+    "🇮🇹": TranslateLanguage.it
+]
 
