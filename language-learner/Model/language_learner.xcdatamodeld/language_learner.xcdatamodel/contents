@@ -9,7 +9,7 @@
     <entity name="Deck" representedClassName="Deck" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="language" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="language" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="parent" inverseEntity="Card"/>
         <relationship name="reviews" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Review" inverseName="parent" inverseEntity="Review"/>
@@ -17,12 +17,12 @@
     <entity name="Review" representedClassName="Review" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="numCards" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="score" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="score" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Deck" inverseName="reviews" inverseEntity="Deck"/>
     </entity>
     <elements>
         <element name="Card" positionX="-54" positionY="18" width="128" height="103"/>
-        <element name="Deck" positionX="-63" positionY="-18" width="128" height="28"/>
+        <element name="Deck" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="Review" positionX="-36" positionY="63" width="128" height="103"/>
     </elements>
 </model>

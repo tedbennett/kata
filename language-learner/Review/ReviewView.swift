@@ -11,13 +11,15 @@ import SwiftUI
 struct ReviewView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentation
-
+    
     @ObservedObject var deck: Deck
     @State var cards: [Card]
     @State private var currentIdx = 0
     @State private var textField = ""
     @State private var scores = [ReviewResult]()
     @State private var reviewFinished = false
+    
+    
     var currentCard: Card {
         return cards[currentIdx]
     }
@@ -35,11 +37,11 @@ struct ReviewView: View {
                 return AnyView(VStack {
                     ProgressBar(current: $currentIdx, total: cards.count).frame(height: 10)
                         .animation(.easeInOut(duration: 0.6))
-
+                    
                     Spacer()
                     Text(currentCard.front).font(.largeTitle).animation(.linear)
                     Spacer()
-                    CustomTextField(tag: 0, language: Language(rawValue: deck.language) ?? .other, placeholder: "", changeHandler: { (newString) in
+                    CustomTextField(tag: 0, language: deck.language, placeholder: "", changeHandler: { (newString) in
                         self.textField = newString
                     }, onCommitHandler: {
                         self.scores.append(ReviewResult(id: self.currentCard.id, correct: self.textField == self.currentCard.back, front: self.currentCard.front, back: self.currentCard.back))
@@ -55,24 +57,22 @@ struct ReviewView: View {
                             } else {
                                 //otherwise new db entry
                                 let review = Review(context: self.managedObjectContext)
-                            
+                                
                                 review.date = calendar.startOfDay(for:Date())
                                 review.numCards = Int16(self.cards.count)
                                 review.score = self.totalScore
                                 review.parent = self.deck
                             }
- 
                             
                             try! self.managedObjectContext.save()
-                            
                             self.reviewFinished = true
                         }
-                        })
+                    })
                     Spacer()
                     Spacer()
-
+                    
                 }.navigationBarTitle("Review", displayMode: .inline))
-                
+            
             case true :
                 return AnyView(
                     VStack {

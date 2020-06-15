@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-private let flags: [String] = Array(languageFlags.keys)
-
 struct AddDeckView: View {
     // Makes view scroll on opening keyboard
     @ObservedObject private var keyboard = KeyboardResponder()
@@ -26,8 +24,8 @@ struct AddDeckView: View {
             Section(header: Text("Details").font(.headline)) {
                 TextField("Name", text: $deck.name)
                 Picker(selection: $deck.languageIndex, label: Text("Language")) {
-                    ForEach(0 ..< flags.count) {
-                        Text(flags[$0]).tag($0 as Int?)
+                    ForEach(0 ..< languages.count) {
+                        Text(languages[$0]).tag($0 as Int?)
                     }
                 }
                 TextField("Description (Optional)", text: $deck.description)
@@ -102,9 +100,9 @@ func saveDeck(deck: TempDeck) {
     newDeck.id = UUID()
     newDeck.name = deck.name
     if let idx = deck.languageIndex {
-        newDeck.language = (languageFlags[flags[idx]] ?? .other).rawValue
+        newDeck.language = languages[idx]
     } else {
-        newDeck.language = Language.other.rawValue
+        newDeck.language = "🏳️"
     }
     newDeck.desc = deck.description
     for card in deck.cards {

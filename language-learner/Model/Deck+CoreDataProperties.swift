@@ -19,7 +19,7 @@ extension Deck: Identifiable {
 
     @NSManaged public var desc: String?
     @NSManaged public var id: UUID
-    @NSManaged public var language: Int16
+    @NSManaged public var language: String
     @NSManaged public var name: String
     @NSManaged public var cards: NSSet?
     @NSManaged public var reviews: NSSet?

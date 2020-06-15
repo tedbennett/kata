@@ -86,9 +86,24 @@ struct AddCardModalView: View {
     var translator : Translator
     var conditions : ModelDownloadConditions
     
+    let languageTranslateCodes: [String:TranslateLanguage] = [
+        "🇯🇵": TranslateLanguage.ja,
+        "🇰🇷": TranslateLanguage.ko,
+        "🇨🇳": TranslateLanguage.zh,
+        "🇪🇸": TranslateLanguage.es,
+        "🇮🇹": TranslateLanguage.it,
+        "🇫🇷": TranslateLanguage.fr,
+        "🇩🇪": TranslateLanguage.de,
+        "🇬🇧": TranslateLanguage.en,
+        "🏳️": TranslateLanguage.en
+        
+    ]
+
+    
     init(parentDeck: Deck) {
         self.parentDeck = parentDeck
-        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languageTranslateCodes[Language(rawValue: parentDeck.language) ?? .other]!)
+        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languageTranslateCodes[
+            parentDeck.language]!)
         translator = NaturalLanguage.naturalLanguage().translator(options: options)
         conditions = ModelDownloadConditions(
             allowsCellularAccess: false,
@@ -163,15 +178,4 @@ struct AddCardModalView: View {
     }
 }
 
-let languageTranslateCodes: [Language:TranslateLanguage] = [
-    .english: TranslateLanguage.en,
-    .japanese: TranslateLanguage.ja,
-    .korean: TranslateLanguage.ko,
-    .chinese: TranslateLanguage.zh,
-    .spanish: TranslateLanguage.es,
-    .italian: TranslateLanguage.it,
-    .french: TranslateLanguage.fr,
-    .german: TranslateLanguage.de,
-    .other: TranslateLanguage.en
-]
 

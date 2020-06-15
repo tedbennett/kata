@@ -54,16 +54,16 @@ class WrappableTextField: UITextField, UITextFieldDelegate {
 struct CustomTextField: UIViewRepresentable {
     private let tmpView : WrappableTextField
     
-    let languages : [Language:String] = [
-        .english: "en-GB",
-        .japanese: "ja",
-        .korean: "ko",
-        .chinese: "zh-Hans",
-        .spanish: "es",
-        .italian: "it",
-        .french: "fr",
-        .german: "de",
-        .other: "en-GB"
+    let languageIdCodes: [String:String] = [
+        "🇯🇵": "ja-JP",
+        "🇰🇷": "ko",
+        "🇨🇳": "zh-Hans",
+        "🇪🇸": "es",
+        "🇮🇹": "it",
+        "🇫🇷": "fr",
+        "🇩🇪": "de",
+        "🇬🇧": "en-GB",
+        "🏳️": "en-GB"
     ]
     
     //var exposed to SwiftUI object init
@@ -72,8 +72,12 @@ struct CustomTextField: UIViewRepresentable {
     var changeHandler: ((String)->Void)?
     var onCommitHandler: (()->Void)?
     
-    init(tag: Int = 0, language: Language, placeholder: String?, changeHandler: (String)->Void, onCommitHandler: (()->Void)?) {
-        tmpView = WrappableTextField(language: languages[language] ?? "en-GB")
+    init(tag: Int = 0, language: String, placeholder: String?, changeHandler: ((String)->Void)? , onCommitHandler: (()->Void)?) {
+        self.tmpView = WrappableTextField(language: languageIdCodes[language] ?? "en-GB")
+        self.tag = tag
+        self.placeholder = placeholder
+        self.changeHandler = changeHandler
+        self.onCommitHandler = onCommitHandler
     }
     
     func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> WrappableTextField {
