@@ -14,7 +14,8 @@ struct StatsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                CalendarStatsView(scores: self.getReviews(), streak: true)
+                DailyGoalProgressView().padding(10)
+                CalendarStatsView(scores: self.getReviews(), streak: true).padding(10)
                 Spacer()
             }.navigationBarTitle("Stats")
         }
@@ -28,6 +29,35 @@ struct StatsView: View {
         })
         return reviews
     }
+    
+    func DailyGoalProgressView() -> AnyView {
+        var currentProgress = 0
+        decks.forEach({deck in
+            deck.reviewsArray.forEach( {
+                if $0.date == Calendar.current.startOfDay(for:Date()) {
+                    currentProgress += Int($0.numCards)
+                }
+            })
+        })
+        let fraction = Double(currentProgress) / Double(UserDefaults.standard.integer(forKey: "DailyGoal"))
+        return AnyView(
+            VStack {
+                Text("Today's progress:")
+                HStack(alignment: .bottom, spacing: 3) {
+                    Text("\(currentProgress)").font(.largeTitle).fontWeight(.bold)
+                    Text("/\(UserDefaults.standard.integer(forKey: "DailyGoal"))")
+                }
+                if fraction > 1 {
+                    Text("Well done!")
+                } else if fraction > 0.5 {
+                    Text("You're almost there!")
+                } else {
+                    Text("Keep it up!")
+                }
+            }
+        )
+        
+    }
 
 }
 
@@ -37,3 +67,5 @@ struct StatsView: View {
 //        StatsView(decks: FetchedResults<Deck>)
 //    }
 //}
+
+

@@ -10,8 +10,7 @@ import SwiftUI
 
 struct CalendarStatsView: View {
     var scores: [Review]
-    
-    var goal = 40.0
+
     var numCardsCalendar = [[Int]]()
     var weekDays = ["M", "T", "W", "T", "F", "S", "S"]
     
@@ -33,7 +32,7 @@ struct CalendarStatsView: View {
             ForEach(self.numCardsCalendar, id:\.self) { week in
                 HStack {
                     ForEach(week, id: \.self) { numCards in
-                        PercentageWheelView(percentage: Double(numCards) / self.goal, lineWidth: 5)
+                        PercentageWheelView(percentage: Double(numCards) / Double(UserDefaults.standard.integer(forKey: "DailyGoal")), lineWidth: 5)
                             .frame(width: 20, height: 20)
                         .padding(5)
                     }
