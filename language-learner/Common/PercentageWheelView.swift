@@ -1,26 +1,26 @@
 //
-//  FinishReviewView.swift
+//  PercentageWheelView.swift
 //  language-learner
 //
-//  Created by Ted Bennett on 12/06/2020.
+//  Created by Ted Bennett on 16/06/2020.
 //  Copyright © 2020 Ted Bennett. All rights reserved.
 //
 
 import SwiftUI
 
-
-struct PercentageWheel: View {
+struct PercentageWheelView: View {
     var percentage: Double
+    var lineWidth: CGFloat
     @State var endAngle = 0.0
     
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.gray, lineWidth: 20)
+                .stroke(Color.gray, lineWidth: lineWidth)
                 .opacity(0.2)
             Circle()
                 .trim(from: 0.0, to: CGFloat(min(self.endAngle, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
+                .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
                 .foregroundColor(getWheelColour())
                 .rotationEffect(Angle(degrees: 270.0))
                 .onAppear {
@@ -44,4 +44,8 @@ struct PercentageWheel: View {
 }
 
 
-
+//struct PercentageWheelView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PercentageWheelView()
+//    }
+//}

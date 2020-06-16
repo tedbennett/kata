@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct AddDeckView: View {
     // Makes view scroll on opening keyboard
@@ -118,6 +119,8 @@ func saveDeck(deck: TempDeck) {
     } catch {
         print(error.localizedDescription)
     }
+    
+   
 }
 
 // temporary data structures used before commiting to core data

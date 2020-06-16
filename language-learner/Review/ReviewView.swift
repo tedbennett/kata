@@ -41,7 +41,7 @@ struct ReviewView: View {
                     Spacer()
                     Text(currentCard.front).font(.largeTitle).animation(.linear)
                     Spacer()
-                    CustomTextField(tag: 0, language: deck.language, placeholder: "", changeHandler: { (newString) in
+                    CustomTextField(tag: 0, placeholder: "", language: deck.language, changeHandler: { (newString) in
                         self.textField = newString
                     }, onCommitHandler: {
                         self.scores.append(ReviewResult(id: self.currentCard.id, correct: self.textField == self.currentCard.back, front: self.currentCard.front, back: self.currentCard.back))
@@ -77,7 +77,7 @@ struct ReviewView: View {
                 return AnyView(
                     VStack {
                         ZStack {
-                            PercentageWheel(percentage: self.totalScore).padding(.bottom)
+                            PercentageWheelView(percentage: self.totalScore, lineWidth: 20).padding(.bottom)
                             Text("\(Int(self.totalScore * 100))%").font(.largeTitle).padding(.bottom)
                         }.frame(width: 300, height: 200)
                         

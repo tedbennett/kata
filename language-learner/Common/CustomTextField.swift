@@ -72,25 +72,40 @@ struct CustomTextField: UIViewRepresentable {
     var changeHandler: ((String)->Void)?
     var onCommitHandler: (()->Void)?
     
-    init(tag: Int = 0, language: String, placeholder: String?, changeHandler: ((String)->Void)? , onCommitHandler: (()->Void)?) {
+    var autocorrect: Bool
+    var textAlignment: NSTextAlignment
+    var textSize: Double
+    var returnKeyType: UIReturnKeyType
+    var isFirstResponder: Bool
+    
+    init(tag: Int = 0, placeholder: String = "", language: String = "🇬🇧", autocorrect: Bool = true, textAlignment: NSTextAlignment = .left, textSize: Double = 16.0, returnKeyType: UIReturnKeyType = .default, isFirstResponder: Bool = false, changeHandler: ((String)->Void)? , onCommitHandler: (()->Void)?) {
         self.tmpView = WrappableTextField(language: languageIdCodes[language] ?? "en-GB")
         self.tag = tag
         self.placeholder = placeholder
         self.changeHandler = changeHandler
         self.onCommitHandler = onCommitHandler
+        
+        self.autocorrect = autocorrect
+        self.textAlignment = textAlignment
+        self.textSize = textSize
+        self.returnKeyType = returnKeyType
+        self.isFirstResponder = isFirstResponder
     }
     
     func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> WrappableTextField {
         tmpView.tag = tag
-        tmpView.becomeFirstResponder()
+        if isFirstResponder {
+            tmpView.becomeFirstResponder()
+        }
         tmpView.delegate = tmpView
         tmpView.placeholder = placeholder
-        tmpView.textAlignment = .center
-        tmpView.autocorrectionType = .no
-        tmpView.returnKeyType = .done
-        tmpView.font = UIFont.systemFont(ofSize: 32.0)
         tmpView.onCommitHandler = onCommitHandler
         tmpView.textFieldChangedHandler = changeHandler
+        
+        tmpView.textAlignment = textAlignment
+        tmpView.autocorrectionType = autocorrect ? .yes : .no
+        tmpView.returnKeyType = returnKeyType
+        tmpView.font = UIFont.systemFont(ofSize: CGFloat(textSize))
         return tmpView
     }
     

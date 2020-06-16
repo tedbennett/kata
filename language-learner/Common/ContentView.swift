@@ -22,7 +22,7 @@ struct ContentView: View {
                 Text("Decks")
                 Image(systemName: "rectangle.fill.on.rectangle.angled.fill")
             }
-            StatsView().tabItem {
+            StatsView(decks: decks).tabItem {
                 Text("Stats")
                 Image(systemName: "chart.bar.fill")
             }
@@ -50,6 +50,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//        let deck = Deck(context: context)
+//        deck.name = "New Deck"
+//        deck.language = "🇰🇷"
+//        deck.id = UUID()
+//        try! context.save()
         return ContentView().environment(\.managedObjectContext, context)
     }
 

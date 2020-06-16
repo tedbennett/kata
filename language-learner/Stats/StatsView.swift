@@ -9,13 +9,31 @@
 import SwiftUI
 
 struct StatsView: View {
+    var decks: FetchedResults<Deck>
+ 
     var body: some View {
-        Text("stats")
+        NavigationView {
+            VStack {
+                CalendarStatsView(scores: self.getReviews(), streak: true)
+                Spacer()
+            }.navigationBarTitle("Stats")
+        }
     }
+    
+    
+    func getReviews() -> [Review] {
+        var reviews = [Review]()
+        decks.forEach({ deck in
+            reviews.append(contentsOf: deck.reviewsArray)
+        })
+        return reviews
+    }
+
 }
 
-struct StatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatsView()
-    }
-}
+//struct StatsView_Previews: PreviewProvider {
+//    
+//    static var previews: some View {
+//        StatsView(decks: FetchedResults<Deck>)
+//    }
+//}
