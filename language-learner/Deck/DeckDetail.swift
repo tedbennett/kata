@@ -15,17 +15,31 @@ struct DeckDetail: View {
     @State var showModalView = false
     @State var showActionSheet = false
     @ObservedObject var deck: Deck
+    var percentage: Double
+    
+    init(deck: Deck) {
+        self.deck = deck
+        var learnedSum = 0.0
+        deck.cardArray.forEach {learnedSum += $0.learned}
+        self.percentage = learnedSum / Double(deck.cardArray.count)
+    }
     
     var body: some View {
-        VStack {
+        List{
             VStack(alignment: .center) {
-                Circle()
-                    .fill(Color.clear)
+                ZStack {
+                    PercentageWheelView(percentage: percentage, lineWidth: 20)
+                    VStack(alignment: .center, spacing: 0) {
+                        Text("\(Int(percentage * 100))%").font(.largeTitle)
+                        Text("Learned")
+                    }
+                }
+                
                     .frame(width: 150, height: 150)
-                Text("\(deck.cardArray.count) cards - 73% learned - Review due in 3 days")
+                Text("\(deck.cardArray.count) cards - Review due in 3 days")
                     .padding(20)
-            }
-            List{
+            }.padding(20)
+            
                 ForEach(deck.cardArray, id: \.self) { card in
                     CardView(card: card)
                 }.onDelete(perform: { idxSet in
@@ -33,7 +47,7 @@ struct DeckDetail: View {
                     self.managedObjectContext.delete(card)
                     try! self.managedObjectContext.save()
                 })
-            }
+            
         }.navigationBarTitle(Text(deck.name))
             .navigationBarItems(trailing:
                 HStack { Button(action: {
@@ -58,7 +72,7 @@ struct DeckDetail: View {
 struct CardView: View {
     var card: Card
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(card.front).font(.headline)
             Text(card.back).font(.subheadline)
         }

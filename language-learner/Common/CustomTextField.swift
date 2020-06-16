@@ -19,7 +19,6 @@ class WrappableTextField: UITextField, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         textField.text = ""
         onCommitHandler?()
         return true

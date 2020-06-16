@@ -22,16 +22,6 @@ struct AddCardView: View {
     var translator : Translator
     var conditions : ModelDownloadConditions
     
-    var modelDownloaded: Bool {
-        for model in ModelManager.modelManager().downloadedTranslateModels {
-            print(model.language.toLanguageCode())
-            if model.language == languageTranslateCodes[parentDeck.language] {
-                return true
-            }
-        }
-        return false
-    }
-    
     init(parentDeck: Deck) {
         self.parentDeck = parentDeck
         let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languageTranslateCodes[
@@ -75,11 +65,12 @@ struct AddCardView: View {
                 }
                 if suggestion != nil {
                     Section(header: Text("Suggested Translation")) {
-                        Text(suggestion!)
+                        Button(action: {
+                            if self.suggestion != nil {
+                                self.back = self.suggestion!
+                            }
+                        }, label:{ Text(suggestion!) }).foregroundColor(.white)
                     }
-                }
-                if !modelDownloaded {
-                    Text("Translation model downlaoding")
                 }
                 
                 
@@ -98,6 +89,7 @@ struct AddCardView: View {
                         card.front = self.front
                         card.back = self.back
                         card.id = UUID()
+                        card.learned = 0.0
                         card.parent = self.parentDeck
                         
                         do {

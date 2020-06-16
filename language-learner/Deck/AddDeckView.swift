@@ -111,6 +111,7 @@ func saveDeck(deck: TempDeck) {
         newCard.front = card.front
         newCard.back = card.back
         newCard.id = UUID()
+        newCard.learned = 0.0
         newCard.parent = newDeck
     }
     do {
