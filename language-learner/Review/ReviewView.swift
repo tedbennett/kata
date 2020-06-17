@@ -39,12 +39,12 @@ struct ReviewView: View {
                         .animation(.easeInOut(duration: 0.6))
                     
                     Spacer()
-                    Text(currentCard.front).font(.largeTitle).animation(.linear)
+                    Text(currentCard.front).font(.largeTitle).multilineTextAlignment(.center)
                     Spacer()
-                    CustomTextField(tag: 0, placeholder: "", language: deck.language, changeHandler: { (newString) in
-                        self.textField = newString
-                    }, onCommitHandler: {
-                        self.scores.append(ReviewResult(id: self.currentCard.id, correct: self.textField == self.currentCard.back, front: self.currentCard.front, back: self.currentCard.back))
+                    
+                    CustomTextField(text: $textField, language: deck.language, autocorrect: true, textAlignment: .center, textSize: 32.0, returnKeyType: .done, isFirstResponder: true, changeHandler: { (newString) in
+                    }, onCommitHandler: { text in
+                        self.scores.append(ReviewResult(id: self.currentCard.id, correct: text == self.currentCard.back, front: self.currentCard.front, back: self.currentCard.back))
                         if self.currentIdx < self.cards.count - 1 {
                             self.textField = ""
                             self.currentIdx += 1
@@ -62,6 +62,17 @@ struct ReviewView: View {
                                 review.numCards = Int16(self.cards.count)
                                 review.score = self.totalScore
                                 review.parent = self.deck
+                            }
+                            
+                            for card in self.deck.cardArray {
+                                let score = self.scores.filter( {$0.id == card.id})
+                                if score.first != nil {
+                                    if score.first!.correct {
+                                        card.learned = min(card.learned + 0.2, 1.0)
+                                    } else {
+                                        card.learned = max(card.learned - 0.1, 0.0)
+                                    }
+                                }
                             }
                             
                             try! self.managedObjectContext.save()

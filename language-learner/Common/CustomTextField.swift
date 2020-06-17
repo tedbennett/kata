@@ -10,7 +10,7 @@ import SwiftUI
 
 class WrappableTextField: UITextField, UITextFieldDelegate {
     var textFieldChangedHandler: ((String)->Void)?
-    var onCommitHandler: (()->Void)?
+    var onCommitHandler: ((String)->Void)?
     var language: String = "en-GB"
     
     convenience init(language: String) {
@@ -19,8 +19,7 @@ class WrappableTextField: UITextField, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.text = ""
-        onCommitHandler?()
+        onCommitHandler?(textField.text ?? "")
         return true
     }
     
@@ -51,8 +50,6 @@ class WrappableTextField: UITextField, UITextFieldDelegate {
 }
 
 struct CustomTextField: UIViewRepresentable {
-    private let tmpView : WrappableTextField
-    
     let languageIdCodes: [String:String] = [
         "🇯🇵": "ja-JP",
         "🇰🇷": "ko",
@@ -64,53 +61,37 @@ struct CustomTextField: UIViewRepresentable {
         "🇬🇧": "en-GB",
         "🏳️": "en-GB"
     ]
+    private let tmpView : WrappableTextField
+    @Binding var text: String
     
-    //var exposed to SwiftUI object init
-    var tag = 0
-    var placeholder: String?
-    var changeHandler: ((String)->Void)?
-    var onCommitHandler: (()->Void)?
-    
-    var autocorrect: Bool
-    var textAlignment: NSTextAlignment
-    var textSize: Double
-    var returnKeyType: UIReturnKeyType
-    var isFirstResponder: Bool
-    
-    init(tag: Int = 0, placeholder: String = "", language: String = "🇬🇧", autocorrect: Bool = true, textAlignment: NSTextAlignment = .left, textSize: Double = 16.0, returnKeyType: UIReturnKeyType = .default, isFirstResponder: Bool = false, changeHandler: ((String)->Void)? , onCommitHandler: (()->Void)?) {
+    init(text: Binding<String>, tag: Int = 0, placeholder: String = "", language: String = "🇬🇧", autocorrect: Bool = true, textAlignment: NSTextAlignment = .left, textSize: Double = 16.0, returnKeyType: UIReturnKeyType = .default, isFirstResponder: Bool = false, changeHandler: ((String)->Void)? , onCommitHandler: ((String)->Void)? = nil)  {
         self.tmpView = WrappableTextField(language: languageIdCodes[language] ?? "en-GB")
-        self.tag = tag
-        self.placeholder = placeholder
-        self.changeHandler = changeHandler
-        self.onCommitHandler = onCommitHandler
+        self.tmpView.tag = tag
+        self.tmpView.placeholder = placeholder
+        self.tmpView.textFieldChangedHandler = changeHandler
+        self.tmpView.onCommitHandler = onCommitHandler
         
-        self.autocorrect = autocorrect
-        self.textAlignment = textAlignment
-        self.textSize = textSize
-        self.returnKeyType = returnKeyType
-        self.isFirstResponder = isFirstResponder
+        self.tmpView.textAlignment = textAlignment
+        self.tmpView.autocorrectionType = autocorrect ? .yes : .no
+        self.tmpView.returnKeyType = returnKeyType
+        self.tmpView.font = UIFont.systemFont(ofSize: CGFloat(textSize))
+        
+        if isFirstResponder {
+            self.tmpView.becomeFirstResponder()
+        }
+        self._text = text
     }
     
     func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> WrappableTextField {
-        tmpView.tag = tag
-        if isFirstResponder {
-            tmpView.becomeFirstResponder()
-        }
         tmpView.delegate = tmpView
-        tmpView.placeholder = placeholder
-        tmpView.onCommitHandler = onCommitHandler
-        tmpView.textFieldChangedHandler = changeHandler
-        
-        tmpView.textAlignment = textAlignment
-        tmpView.autocorrectionType = autocorrect ? .yes : .no
-        tmpView.returnKeyType = returnKeyType
-        tmpView.font = UIFont.systemFont(ofSize: CGFloat(textSize))
         return tmpView
     }
     
     func updateUIView(_ uiView: WrappableTextField, context: UIViewRepresentableContext<CustomTextField>) {
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        uiView.text = self.text
+        print(self.text)
     }
 }
 

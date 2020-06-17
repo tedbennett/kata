@@ -15,7 +15,6 @@ struct AddCardView: View {
     @State private var front = ""
     @State private var back = ""
     @State private var failedSave = false
-    //@State private var suggestions = [String]()
     @State private var suggestion: String?
     
     var parentDeck : Deck
@@ -45,22 +44,22 @@ struct AddCardView: View {
         NavigationView {
             Form {
                 Section(header: Text(""), footer: Text("Make sure both fields are filled in").foregroundColor(failedSave ? .red : .clear)) {
-                    CustomTextField(tag: 2, placeholder: "Front", changeHandler: { (newString) in
-                        self.front = newString
-                        self.translator.translate(self.front) { translatedText, error in
+                    CustomTextField(text: self.$front, placeholder: "Front", isFirstResponder: true, changeHandler: { (newString) in
+                        DispatchQueue.main.async {
+                            // prevents modifying state during view update
+                            self.front = newString
+                        }
+                        self.translator.translate(newString) { translatedText, error in
                             guard error == nil, let translatedText = translatedText else {
                                 print(error!.localizedDescription)
                                 return
                             }
                             self.suggestion = translatedText
                         }
-                        
-                    }, onCommitHandler: {
-                        
                     })
-                    CustomTextField(tag: 1, placeholder: "Back", language: self.parentDeck.language, changeHandler: { (newString) in
+                    CustomTextField(text: self.$back, placeholder: "Back", language: self.parentDeck.language, changeHandler: { (newString) in
                         self.back = newString
-                    }, onCommitHandler: {})
+                    })
                     
                 }
                 if suggestion != nil {
