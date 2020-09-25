@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StatsView: View {
     @State private var goal = UserDefaults.standard.integer(forKey: "DailyGoal")
-    
+    @ObservedObject var userSettings = UserSettings()
     var decks: FetchedResults<Deck>
  
     var body: some View {
@@ -20,7 +20,7 @@ struct StatsView: View {
                 VStack(alignment: .center) {
                     HStack {
                         Spacer()
-                        DailyProgressView(goal: self.$goal, currentProgress: self.getDailyProgress()).padding(20)
+                        DailyProgressView(goal: $userSettings.dailyGoal, currentProgress: self.getDailyProgress()).padding(20)
                         Spacer()
                     }
                     HStack {
@@ -28,6 +28,15 @@ struct StatsView: View {
                         CalendarStatsView(scores: self.getReviews(), streak: true).padding(20).frame(alignment: .center)
                         Spacer()
                     }
+                }
+                Section(header: Text("Daily Goal")) {
+                        Picker(selection: $userSettings.dailyGoal, label: Text("Daily Goal")) {
+                            ForEach(userSettings.dailyGoals, id: \.self) { dailyGoal in
+                                Text("\(dailyGoal)")
+                            }
+                            
+                            
+                        }.pickerStyle(SegmentedPickerStyle())
                 }
                 Section(header: Text("Decks")) {
                 ForEach(getSortedDecks(), id: \.self) { deck in
@@ -115,6 +124,24 @@ struct DailyProgressView: View {
                     Text("Keep it up!").italic()
                 }
 
+        }
+    }
+}
+
+class UserSettings: ObservableObject {
+    
+    @Published var dailyGoal: Int {
+        didSet {
+            UserDefaults.standard.set(dailyGoal, forKey: "DailyGoal")
+        }
+    }
+    
+    public var dailyGoals = [20, 30, 40, 50, 75, 100]
+    
+    init() {
+        self.dailyGoal = UserDefaults.standard.integer(forKey: "DailyGoal")
+        if self.dailyGoal == 0 {
+            self.dailyGoal = 20
         }
     }
 }

@@ -26,10 +26,6 @@ struct ContentView: View {
                 Text("Stats")
                 Image(systemName: "chart.bar.fill")
             }
-            SettingsView().tabItem {
-                Text("Settings")
-                Image(systemName: "gear")
-            }
         }
     }
 }

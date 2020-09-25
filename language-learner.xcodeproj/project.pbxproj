@@ -17,13 +17,13 @@
 		9F0342CD2492720E00174771 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342CC2492720D00174771 /* StatsView.swift */; };
 		9F0342CF2492726300174771 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342CE2492726300174771 /* HomeView.swift */; };
 		9F0342D1249272C200174771 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D0249272C200174771 /* DeckView.swift */; };
-		9F0342D3249272CB00174771 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D2249272CB00174771 /* SettingsView.swift */; };
 		9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0342D424927BDA00174771 /* DeckDetail.swift */; };
 		9F4ABF7A2497976900889E48 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4ABF792497976900889E48 /* CustomTextField.swift */; };
 		9F4ABF7C24979D7700889E48 /* language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4ABF7B24979D7700889E48 /* language.swift */; };
 		9F4ABF7F2497C3A000889E48 /* Review+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4ABF7D2497C3A000889E48 /* Review+CoreDataClass.swift */; };
 		9F4ABF802497C3A000889E48 /* Review+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4ABF7E2497C3A000889E48 /* Review+CoreDataProperties.swift */; };
 		9F4ABF8A2497D54300889E48 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4ABF892497D54300889E48 /* AddCardView.swift */; };
+		9F4D3075251E66F700B9E6D6 /* ScoreLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D3074251E66F700B9E6D6 /* ScoreLineGraphView.swift */; };
 		9F66FE402498B69800DE0F48 /* CalendarStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F66FE3F2498B69800DE0F48 /* CalendarStatsView.swift */; };
 		9F66FE422498D8EB00DE0F48 /* PercentageWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */; };
 		9F7D42BF24938BDD003FA006 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */; };
@@ -47,13 +47,13 @@
 		9F0342CC2492720D00174771 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		9F0342CE2492726300174771 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F0342D0249272C200174771 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
-		9F0342D2249272CB00174771 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9F0342D424927BDA00174771 /* DeckDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckDetail.swift; sourceTree = "<group>"; };
 		9F4ABF792497976900889E48 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F4ABF7B24979D7700889E48 /* language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = language.swift; sourceTree = "<group>"; };
 		9F4ABF7D2497C3A000889E48 /* Review+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Review+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9F4ABF7E2497C3A000889E48 /* Review+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Review+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F4ABF892497D54300889E48 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		9F4D3074251E66F700B9E6D6 /* ScoreLineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreLineGraphView.swift; sourceTree = "<group>"; };
 		9F66FE3F2498B69800DE0F48 /* CalendarStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStatsView.swift; sourceTree = "<group>"; };
 		9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageWheelView.swift; sourceTree = "<group>"; };
 		9F7D42BB24938BDD003FA006 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 				9F4ABF862497D33000889E48 /* Review */,
 				9F4ABF852497D32B00889E48 /* Home */,
 				9F4ABF842497D31600889E48 /* Stats */,
-				9F4ABF832497D30500889E48 /* Settings */,
 				9F4ABF822497D2F600889E48 /* Deck */,
 				9F0342B524916FB300174771 /* AppDelegate.swift */,
 				9F0342B724916FB300174771 /* SceneDelegate.swift */,
@@ -129,14 +128,6 @@
 			path = Deck;
 			sourceTree = "<group>";
 		};
-		9F4ABF832497D30500889E48 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				9F0342D2249272CB00174771 /* SettingsView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		9F4ABF842497D31600889E48 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +155,7 @@
 		9F4ABF882497D3B100889E48 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9F4D3074251E66F700B9E6D6 /* ScoreLineGraphView.swift */,
 				9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */,
 				9F66FE3F2498B69800DE0F48 /* CalendarStatsView.swift */,
 				9F4ABF892497D54300889E48 /* AddCardView.swift */,
@@ -263,7 +255,6 @@
 				9F4ABF7C24979D7700889E48 /* language.swift in Sources */,
 				9F0342B624916FB300174771 /* AppDelegate.swift in Sources */,
 				9F66FE402498B69800DE0F48 /* CalendarStatsView.swift in Sources */,
-				9F0342D3249272CB00174771 /* SettingsView.swift in Sources */,
 				9F0342CD2492720E00174771 /* StatsView.swift in Sources */,
 				9F66FE422498D8EB00DE0F48 /* PercentageWheelView.swift in Sources */,
 				9F0342BB24916FB300174771 /* language_learner.xcdatamodeld in Sources */,
@@ -279,6 +270,7 @@
 				9F0342BD24916FB300174771 /* ContentView.swift in Sources */,
 				9FFEB0602494069E000EC266 /* ReviewView.swift in Sources */,
 				9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */,
+				9F4D3075251E66F700B9E6D6 /* ScoreLineGraphView.swift in Sources */,
 				9F0342B824916FB300174771 /* SceneDelegate.swift in Sources */,
 				9F4ABF8A2497D54300889E48 /* AddCardView.swift in Sources */,
 			);
