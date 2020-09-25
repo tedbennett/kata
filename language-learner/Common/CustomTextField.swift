@@ -52,7 +52,7 @@ class WrappableTextField: UITextField, UITextFieldDelegate {
 struct CustomTextField: UIViewRepresentable {
     let languageIdCodes: [String:String] = [
         "🇯🇵": "ja-JP",
-        "🇰🇷": "ko",
+        "🇰🇷": "ko-KR",
         "🇨🇳": "zh-Hans",
         "🇪🇸": "es",
         "🇮🇹": "it",

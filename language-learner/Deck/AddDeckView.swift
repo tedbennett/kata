@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct AddDeckView: View {
     // Makes view scroll on opening keyboard

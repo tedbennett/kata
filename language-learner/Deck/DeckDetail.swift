@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct DeckDetail: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
@@ -40,7 +39,10 @@ struct DeckDetail: View {
                     .padding(20)
             }.padding(20)
             
-            ForEach(deck.cardArray, id: \.self) { card in
+            ForEach(deck.cardArray.sorted(by: {card1, card2 in
+                card1.learned > card2.learned
+            })
+            , id: \.self) { card in
                 CardView(card: card)
             }.onDelete(perform: { idxSet in
                 let card = self.deck.cardArray[idxSet.first!]
@@ -68,9 +70,19 @@ struct DeckDetail: View {
 struct CardView: View {
     var card: Card
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(card.front).font(.headline)
-            Text(card.back).font(.subheadline)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(card.front).font(.headline)
+                Text(card.back).font(.subheadline)
+            }
+            Spacer()
+            if card.learned > 0.8 {
+                Image(systemName: "checkmark").foregroundColor(.green)
+            } else if card.learned > 0.4 {
+                Image(systemName: "questionmark").foregroundColor(.yellow)
+            } else {
+                Image(systemName: "xmark").foregroundColor(.red)
+            }
         }
     }
 }

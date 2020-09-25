@@ -87,6 +87,7 @@ struct ReviewView: View {
             case true :
                 return AnyView(
                     VStack {
+                        
                         ZStack {
                             PercentageWheelView(percentage: self.totalScore, lineWidth: 20).padding(.bottom)
                             Text("\(Int(self.totalScore * 100))%").font(.largeTitle).padding(.bottom)

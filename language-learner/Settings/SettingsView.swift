@@ -23,9 +23,6 @@ struct SettingsView: View {
                     .navigationBarTitle("Daily Goal")
                 }
                 }.navigationBarTitle("Settings")
-                Section(footer: Text("Each language requires one-off 30MB download for suggestions when creating cards")) {
-                Toggle(isOn: $userSettings.useGoogleTranslate, label: {Text("Google Translate Suggestions")})
-                }
             }
         }
     }
@@ -47,16 +44,9 @@ class UserSettings: ObservableObject {
         }
     }
     
-    @Published var useGoogleTranslate: Bool {
-        didSet {
-            UserDefaults.standard.set(dailyGoal, forKey: "UseGoogleTranslate")
-        }
-    }
-    
     public var dailyGoals = [20, 30, 40, 50, 75, 100, 150, 200]
     
     init() {
         self.dailyGoal = UserDefaults.standard.integer(forKey: "DailyGoal")
-        self.useGoogleTranslate = UserDefaults.standard.bool(forKey: "UseGoogleTranslate")
     }
 }

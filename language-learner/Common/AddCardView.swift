@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct AddCardView: View {
     @Environment(\.presentationMode) private var presentationMode
@@ -15,29 +14,12 @@ struct AddCardView: View {
     @State private var front = ""
     @State private var back = ""
     @State private var failedSave = false
-    @State private var suggestion: String?
     
     var parentDeck : Deck
-    var translator : Translator
-    var conditions : ModelDownloadConditions
     
     init(parentDeck: Deck) {
         self.parentDeck = parentDeck
-        let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: languageTranslateCodes[
-            parentDeck.language]!)
-        conditions = ModelDownloadConditions(
-            allowsCellularAccess: false,
-            allowsBackgroundDownloading: true
-        )
-        translator = NaturalLanguage.naturalLanguage().translator(options: options)
-        TranslateRemoteModel.translateRemoteModel(language: .ja)
-        translator.downloadModelIfNeeded(with: conditions) { error in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-        }
-        
+
     }
     
     var body: some View {
@@ -49,30 +31,16 @@ struct AddCardView: View {
                             // prevents modifying state during view update
                             self.front = newString
                         }
-                        self.translator.translate(newString) { translatedText, error in
-                            guard error == nil, let translatedText = translatedText else {
-                                print(error!.localizedDescription)
-                                return
-                            }
-                            self.suggestion = translatedText
-                        }
                     })
                     CustomTextField(text: self.$back, placeholder: "Back", language: self.parentDeck.language, changeHandler: { (newString) in
+                        //DispatchQueue.main.async {
+                        //self.back = newString
+                        //}
+                    }, onCommitHandler: { newString in
                         self.back = newString
                     })
                     
                 }
-                if suggestion != nil {
-                    Section(header: Text("Suggested Translation")) {
-                        Button(action: {
-                            if self.suggestion != nil {
-                                self.back = self.suggestion!
-                            }
-                        }, label:{ Text(suggestion!) }).foregroundColor(.white)
-                    }
-                }
-                
-                
             }.navigationBarTitle(Text("Add New Card"))
                 .navigationBarItems(
                     leading: Button(action: {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Firebase
 
 let languages = ["🇯🇵",
                  "🇰🇷",
@@ -18,16 +17,4 @@ let languages = ["🇯🇵",
                  "🇩🇪",
                  "🇬🇧",
                  "🏳️"]
-
-let languageTranslateCodes: [String:TranslateLanguage] = [
-    "🇯🇵": TranslateLanguage.ja,
-    "🇰🇷": TranslateLanguage.ko,
-    "🇨🇳": TranslateLanguage.zh,
-    "🇪🇸": TranslateLanguage.es,
-    "🇮🇹": TranslateLanguage.it,
-    "🇫🇷": TranslateLanguage.fr,
-    "🇩🇪": TranslateLanguage.de,
-    "🇬🇧": TranslateLanguage.en,
-    "🏳️": TranslateLanguage.en
-]
 
