@@ -15,9 +15,7 @@ struct DeckDetail: View {
     @State var showingReview = false
     @ObservedObject var deck: Deck
     var percentage: Double {
-        deck.cardArray.reduce(0.0) { sum, card in
-            sum + card.learned
-        } / Double(deck.cardArray.isEmpty ? 1 : deck.cardArray.count)
+        Double(deck.cardArray.filter { $0.lastScore}.count) / Double(deck.cardArray.isEmpty ? 1 : deck.cardArray.count)
     }
     
     var body: some View {
@@ -40,10 +38,16 @@ struct DeckDetail: View {
                 Text("Last Review:").font(.title).padding(.top, 20)
             }.padding(20)
             
-            ForEach(deck.cardArray.sorted(by: {card1, card2 in
-                card1.learned > card2.learned
-            }), id: \.self) { card in
-                CardView(card: card)
+            ForEach(deck.cardArray.filter {!$0.lastScore}) { card in
+                ScoreCard(card: card)
+            }
+            .onDelete(perform: { idxSet in
+                let card = deck.cardArray[idxSet.first!]
+                managedObjectContext.delete(card)
+                try! managedObjectContext.save()
+            })
+            ForEach(deck.cardArray.filter {$0.lastScore}) { card in
+                ScoreCard(card: card)
             }
             .onDelete(perform: { idxSet in
                 let card = deck.cardArray[idxSet.first!]
@@ -73,23 +77,6 @@ struct DeckDetail: View {
     }
 }
 
-struct CardView: View {
-    var card: Card
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(card.front).font(.headline)
-                Text(card.back).font(.subheadline)
-            }
-            Spacer()
-            if card.lastScore {
-                Image(systemName: "checkmark").foregroundColor(.green)
-            } else {
-                Image(systemName: "xmark").foregroundColor(.red)
-            }
-        }
-    }
-}
 
 //struct DeckDetail_Previews: PreviewProvider {
 //    static var previews: some View {

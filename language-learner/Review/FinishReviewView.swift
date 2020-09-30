@@ -25,19 +25,11 @@ struct FinishReviewView: View {
             }.frame(width: 300, height: 200)
             
             List {
-                ForEach(deck.cardArray.sorted {$0.lastScore == $1.lastScore}) { card in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(card.front).font(.headline)
-                            Text(card.back).font(.subheadline)
-                        }
-                        Spacer()
-                        if card.lastScore {
-                            Image(systemName: "checkmark").foregroundColor(.green)
-                        } else {
-                            Image(systemName: "xmark").foregroundColor(.red)
-                        }
-                    }
+                ForEach(deck.cardArray.filter {!$0.lastScore}) { card in
+                    ScoreCard(card: card)
+                }
+                ForEach(deck.cardArray.filter {$0.lastScore}) { card in
+                    ScoreCard(card: card)
                 }
             }
         }.navigationBarTitle("Results")
