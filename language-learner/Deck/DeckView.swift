@@ -16,9 +16,9 @@ struct DeckView: View {
             List(decks) { deck in
                 DeckCell(deck: deck)
             }.navigationBarTitle(Text("Decks"))
-                .navigationBarItems(trailing: NavigationLink(destination: AddDeckView()) {
-                    Image(systemName: "plus").imageScale(.large)
-                })
+            .navigationBarItems(trailing: NavigationLink(destination: AddDeckView()) {
+                Image(systemName: "plus").imageScale(.large)
+            })
         }
     }
 }
@@ -27,9 +27,12 @@ struct DeckCell: View {
     @ObservedObject var deck: Deck
     var body: some View {
         return NavigationLink(destination: DeckDetail(deck: deck)) {
-            VStack(alignment: .leading) {
-                Text("\(deck.name) \(deck.language)").font(.headline)
-                Text("\(deck.cardArray.count) cards").font(.subheadline)
+            HStack {
+                Text(deck.language).font(.largeTitle)
+                VStack(alignment: .leading) {
+                    Text(deck.name).font(.headline)
+                    Text("\(deck.cardArray.count) card\(deck.cardArray.count == 1 ? "" : "s")").font(.subheadline)
+                }
             }
         }
     }
