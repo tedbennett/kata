@@ -42,7 +42,7 @@ struct AddCardView: View {
                     Text("Add Another Card")
                 })
                 
-            }.navigationBarTitle(Text("Add New Card"))
+            }.navigationBarTitle(Text("Add New Cards"))
             .navigationBarItems(trailing: Button(action: {
                     saveCards()
                 }, label: {Text("Done")}))

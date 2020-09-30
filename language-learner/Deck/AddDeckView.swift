@@ -15,122 +15,106 @@ struct AddDeckView: View {
     
     // Flags to determine whether to show alerts when the user tries to leave/save
     @State private var deckNotComplete = false
-    @State private var deckEdited = false
     
-    @State private var deck = TempDeck()
+    @State private var languageIdx = 0
+    @State private var name = ""
+    @State private var description = ""
+    @State private var cards = [CardForm]()
     
     var body: some View {
         Form {
-            Section(header: Text("Details").font(.headline)) {
-                TextField("Name", text: $deck.name)
-                
-                TextField("Description (Optional)", text: $deck.description)
+            Section {
+                TextField("Name", text: $name)
+                TextField("Description (Optional)", text: $description)
             }
             
-            Picker(selection: $deck.languageIndex, label: Text("")) {
+            Section(header: Text("Language")) {
+            Picker(selection: $languageIdx, label: Text("")) {
                 ForEach(0 ..< languages.count) {
-                    Text(languages[$0]).tag($0 as Int?)
+                    Text(languages[$0])
                 }
             }.pickerStyle(SegmentedPickerStyle())
-        
-            ForEach(self.deck.cards.indices, id:\.self) { idx in
+            }
+            
+            ForEach(cards.indices, id:\.self) { idx in
                 Section(header: Text("Card \(idx + 1)")) {
-                    TextField("Front", text: self.$deck.cards[idx].front)
-                    TextField("Back", text: self.$deck.cards[idx].back)
+                    CustomTextField(text: $cards[idx].front, placeholder: "Front", autocorrect: false, returnKeyType: .next, changeHandler: {str in
+                        cards[idx].front = str
+                    })
+                    CustomTextField(text: $cards[idx].back, placeholder: "Back", language: languages[languageIdx], autocorrect: false, returnKeyType: .next, changeHandler: {str in
+                        cards[idx].back = str
+                    })
                 }
             }
-            Button(action: {
-                self.deck.cards.append(CardForm())
-                print(self.deck.cards)
-            }, label: {
-                Text(self.deck.cards.count == 0 ? "Add Cards" : "Add Another Card")
-            })
-            
+            Section {
+                Button(action: {
+                    cards.append(CardForm())
+                }, label: {
+                    Text(cards.count == 0 ? "Add Cards" : "Add Another Card")
+                })
+            }
         }
-            
+        
         .navigationBarTitle("Add Deck")
-            
+        
         .navigationBarItems(
-            leading: Button(action: {
-                if (self.deck.languageIndex != nil) ||
-                    (self.deck.name != "") ||
-                    (self.deck.description != "") ||
-                    !self.deck.cards.isEmpty {
-                    self.deckEdited = true
-                } else {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            }, label: {
-                Image(systemName: "chevron.left").imageScale(.large)
-                Text("Cancel")
-            }
-            ).alert(isPresented: self.$deckEdited) {
-                Alert(title: Text("Go Back?"), message: Text("All changes will be lost"), primaryButton: .destructive(Text("Go Back")) {
-                    self.presentationMode.wrappedValue.dismiss()
-                    }, secondaryButton: .default(Text("Keep Editing")))
-                
-            },
             trailing:
-            Button(action: {
-                if (self.deck.languageIndex == nil) || (self.deck.name == "") {
-                    self.deckNotComplete = true
-                }
-                for card in self.deck.cards {
-                    if card.front.isEmpty || card.back.isEmpty {
-                        self.deckNotComplete = true
+                Button(action: {
+                    if (name == "") {
+                        deckNotComplete = true
                     }
-                }
-                if !self.deckNotComplete {
-                    saveDeck(deck: self.deck)
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            },
-                   label: {Text("Save")}
-            ).alert(isPresented: self.$deckNotComplete) {
-                Alert(title: Text("Deck Not Complete"), message: Text("Make sure to fill in all card and deck fields"))
-        })
-            .padding(.bottom, keyboard.currentHeight)
-            .edgesIgnoringSafeArea(.bottom)
-            .animation(.easeOut(duration: 0.1))
+                    if !deckNotComplete {
+                        saveDeck()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                },
+                label: {Text("Done")}
+                ).alert(isPresented: $deckNotComplete) {
+                    Alert(title: Text("Finish?"), message: Text("Some fields not complete. All changes will be lost."), primaryButton: .destructive(Text("Finish")) {
+                        presentationMode.wrappedValue.dismiss()
+                    }, secondaryButton: .default(Text("Keep Editing")))
+                    
+                })
+        .padding(.bottom, keyboard.currentHeight)
+        .edgesIgnoringSafeArea(.bottom)
+        .animation(.easeOut(duration: 0.1))
+    }
+    
+    func saveDeck() {
+        let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let newDeck = Deck(context: viewContext)
+        
+        newDeck.id = UUID()
+        newDeck.name = name
+        
+        newDeck.language = languages[languageIdx]
+        
+        newDeck.desc = description
+        cards.filter {$0.front != "" && $0.back != ""}.forEach { card in
+            let newCard = Card(context: viewContext)
+            newCard.front = card.front
+            newCard.back = card.back
+            newCard.id = UUID()
+            newCard.learned = 0.0
+            newCard.lastScore = false
+            newCard.parent = newDeck
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
-func saveDeck(deck: TempDeck) {
-    let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let newDeck = Deck(context: viewContext)
-    
-    newDeck.id = UUID()
-    newDeck.name = deck.name
-    if let idx = deck.languageIndex {
-        newDeck.language = languages[idx]
-    } else {
-        newDeck.language = "🏳️"
-    }
-    newDeck.desc = deck.description
-    for card in deck.cards {
-        let newCard = Card(context: viewContext)
-        newCard.front = card.front
-        newCard.back = card.back
-        newCard.id = UUID()
-        newCard.learned = 0.0
-        newCard.parent = newDeck
-    }
-    do {
-        try viewContext.save()
-        print("Order saved.")
-    } catch {
-        print(error.localizedDescription)
-    }
-    
-   
-}
+
 
 // temporary data structures used before commiting to core data
 
 struct TempDeck {
     var name = ""
     var description = ""
-    var languageIndex : Int?
+    var language: String?
     var cards = [CardForm]()
 }
 
@@ -138,8 +122,6 @@ struct CardForm: Identifiable {
     var id = UUID()
     var front = ""
     var back = ""
-    var frontValid = true
-    var backValid = true
 }
 
 struct AddDeckView_Previews: PreviewProvider {
