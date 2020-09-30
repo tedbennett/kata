@@ -38,7 +38,10 @@ struct ReviewView: View {
                     
                     CustomTextField(text: $textField, language: deck.language, autocorrect: true, textAlignment: .center, textSize: 32.0, returnKeyType: .done, isFirstResponder: true, changeHandler: { (newString) in
                     }, onCommitHandler: { text in
-                        updateCard(correct: text == self.currentCard.back)
+                        
+                        checkAnswerCorrect(correct: text == self.currentCard.back)
+                        updateCard()
+                        
                         if self.currentIdx < self.cards.count - 1 {
                             self.textField = ""
                             self.currentIdx += 1
@@ -69,12 +72,18 @@ struct ReviewView: View {
         })
     }
     
-    func updateCard(correct: Bool) {
+    func checkAnswerCorrect(correct: Bool) {
         answerCorrect = correct
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(correct ? .success : .error)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             answerCorrect = nil
         }
-        currentCard.lastScore = correct
+    }
+    
+    func updateCard() {
+        currentCard.lastScore = answerCorrect!
         try! self.managedObjectContext.save()
     }
 }
