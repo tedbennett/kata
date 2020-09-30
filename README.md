@@ -22,7 +22,6 @@ This is a flashcard app to help learn languages, with the emphasis in learning h
 - Issue with custom TextField and bindings (particularly keyboard language)
 - Adding cards to a deck causes the Last Review percentage to change
 
-This app will be an Anki-style language flashcard app. 
 
 ## Overview for Historical Data / Review suggestions
 
