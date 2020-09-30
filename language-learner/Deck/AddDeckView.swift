@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct AddDeckView: View {
-    // Makes view scroll on opening keyboard
-    @ObservedObject private var keyboard = KeyboardResponder()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     // Flags to determine whether to show alerts when the user tries to leave/save
@@ -22,6 +20,7 @@ struct AddDeckView: View {
     @State private var cards = [CardForm]()
     
     var body: some View {
+        NavigationView {
         Form {
             Section {
                 TextField("Name", text: $name)
@@ -53,17 +52,13 @@ struct AddDeckView: View {
                     Text(cards.count == 0 ? "Add Cards" : "Add Another Card")
                 })
             }
-        }
-        
-        .navigationBarTitle("Add Deck")
-        
+        }.navigationBarTitle("Add Deck")
         .navigationBarItems(
             trailing:
                 Button(action: {
                     if (name == "") {
                         deckNotComplete = true
-                    }
-                    if !deckNotComplete {
+                    } else {
                         saveDeck()
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -75,9 +70,7 @@ struct AddDeckView: View {
                     }, secondaryButton: .default(Text("Keep Editing")))
                     
                 })
-        .padding(.bottom, keyboard.currentHeight)
-        .edgesIgnoringSafeArea(.bottom)
-        .animation(.easeOut(duration: 0.1))
+        }
     }
     
     func saveDeck() {
@@ -107,17 +100,6 @@ struct AddDeckView: View {
     }
 }
 
-
-
-// temporary data structures used before commiting to core data
-
-struct TempDeck {
-    var name = ""
-    var description = ""
-    var language: String?
-    var cards = [CardForm]()
-}
-
 struct CardForm: Identifiable {
     var id = UUID()
     var front = ""
@@ -131,32 +113,32 @@ struct AddDeckView_Previews: PreviewProvider {
 }
 
 
-// SO solution to having the keyboard scroll to the selected TextField
-
-final class KeyboardResponder: ObservableObject {
-    private var notificationCenter: NotificationCenter
-    @Published private(set) var currentHeight: CGFloat = 0
-    
-    init(center: NotificationCenter = .default) {
-        notificationCenter = center
-        notificationCenter.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    deinit {
-        notificationCenter.removeObserver(self)
-    }
-    
-    @objc func keyBoardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            currentHeight = keyboardSize.height
-        }
-    }
-    
-    @objc func keyBoardWillHide(notification: Notification) {
-        currentHeight = 0
-    }
-}
+//// SO solution to having the keyboard scroll to the selected TextField
+//
+//final class KeyboardResponder: ObservableObject {
+//    private var notificationCenter: NotificationCenter
+//    @Published private(set) var currentHeight: CGFloat = 0
+//
+//    init(center: NotificationCenter = .default) {
+//        notificationCenter = center
+//        notificationCenter.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//
+//    deinit {
+//        notificationCenter.removeObserver(self)
+//    }
+//
+//    @objc func keyBoardWillShow(notification: Notification) {
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            currentHeight = keyboardSize.height
+//        }
+//    }
+//
+//    @objc func keyBoardWillHide(notification: Notification) {
+//        currentHeight = 0
+//    }
+//}
 
 
 

@@ -10,14 +10,19 @@ import SwiftUI
 
 struct DeckView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @State private var showAddDeckView = false
     var decks: FetchedResults<Deck>
     var body: some View {
         NavigationView {
             List(decks) { deck in
                 DeckCell(deck: deck)
             }.navigationBarTitle(Text("Decks"))
-            .navigationBarItems(trailing: NavigationLink(destination: AddDeckView()) {
+            .navigationBarItems(trailing: Button {
+                showAddDeckView.toggle()
+            } label: {
                 Image(systemName: "plus").imageScale(.large)
+            }).sheet(isPresented: $showAddDeckView, content: {
+                AddDeckView()
             })
         }
     }
