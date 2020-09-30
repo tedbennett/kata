@@ -1,8 +1,28 @@
 # Language Learning
 
-This app will be an Anki-style language flashcard app. Instead of giving an indication of how well you remember the word on the front of the flashcard (e.g "Fail, Hard, Easy"), you must instead correctly type out the reverse of the card. I find this not only helps to reinforce learning, but for languages with a non-Qwerty keyboard (e.g Korean, Japanese), it helps gain familiarity with the keyboard and builds typing skills.
+## Description
 
-For first draft, a simple algorithm for words-to-review will be used and decks can be created in-app or imported from a .csv file. Hopefully in the future a more advanced Anki-like algorithm can be implemented as well as using the .apkg format.
+This is a flashcard app to help learn languages, with the emphasis in learning how to type in another language (most helpful for a language with a different keyboard than one you are familiar with). Instead of giving an indication of how well you remember the word on the front of the flashcard (e.g "Fail, Hard, Easy"), you must instead correctly type out the reverse of the card. I personally find this helps reinforce learning, and has the bonus of improving typing skills.
+
+## Future Work
+**Near future**
+- Stats view - past review scores, daily trends etc.
+- "Learned" percentage (see below)
+- Firebase/GCloud Machine Translation suggestions when creating cards
+
+**Further down the road**
+- Simplify deck creation
+- Sounds to assist learning
+- Anki .apkg format import
+- CloudKit/Firebase integration to sync review history and decks
+
+**Known Issues**
+- Finish Review modal 'Done' button sometimes doesn't pop the view
+- Finish Review modal animations class with NavigationView animations
+- Issue with custom TextField and bindings (particularly keyboard language)
+- Adding cards to a deck causes the Last Review percentage to change
+
+This app will be an Anki-style language flashcard app. 
 
 ## Overview for Historical Data / Review suggestions
 
