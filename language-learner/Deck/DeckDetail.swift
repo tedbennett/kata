@@ -11,8 +11,8 @@ import SwiftUI
 struct DeckDetail: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
     @Environment(\.presentationMode) var presentation
-    @State var showModalView = false
-    @State var startReview = false
+    @State var showAddCards = false
+    @State var showingReview = false
     @ObservedObject var deck: Deck
     var percentage: Double {
         deck.cardArray.reduce(0.0) { sum, card in
@@ -24,6 +24,12 @@ struct DeckDetail: View {
         List{
             
             VStack {
+                
+                // Workaround getting home view to pop
+                NavigationLink(destination: ReviewView(deck: deck, cards: deck.cardArray.shuffled(), reviewInProgress: $showingReview), isActive: $showingReview) {
+                    EmptyView()
+                }
+                
                 ZStack {
                     PercentageWheelView(percentage: percentage, lineWidth: 20)
                     VStack(alignment: .center, spacing: 0) {
@@ -40,27 +46,29 @@ struct DeckDetail: View {
                 CardView(card: card)
             }
             .onDelete(perform: { idxSet in
-                let card = self.deck.cardArray[idxSet.first!]
-                self.managedObjectContext.delete(card)
-                try! self.managedObjectContext.save()
+                let card = deck.cardArray[idxSet.first!]
+                managedObjectContext.delete(card)
+                try! managedObjectContext.save()
             })
             
         }.navigationBarTitle(Text(deck.name))
         .navigationBarItems(trailing:
                                 HStack {
-                                    NavigationLink(destination: ReviewView(deck: self.deck, cards: self.deck.cardArray.shuffled())) {
+                                    Button {
+                                        showingReview.toggle()
+                                    } label: {
                                         Text("Review")
                                     }.disabled(deck.cardArray.isEmpty)
+                                    
                                     Spacer()
                                     Spacer()
                                     Button(action: {
-                                        self.showModalView.toggle()
+                                        showAddCards.toggle()
                                     }, label: {
                                         Image(systemName: "plus").imageScale(.large)
-                                    }).sheet(isPresented: $showModalView) {
+                                    }).sheet(isPresented: $showAddCards) {
                                         AddCardView(parentDeck: self.deck)
                                     }
-                                    
                                 })
     }
 }
@@ -74,10 +82,8 @@ struct CardView: View {
                 Text(card.back).font(.subheadline)
             }
             Spacer()
-            if card.learned > 0.8 {
+            if card.lastScore {
                 Image(systemName: "checkmark").foregroundColor(.green)
-            } else if card.learned > 0.4 {
-                Image(systemName: "questionmark").foregroundColor(.yellow)
             } else {
                 Image(systemName: "xmark").foregroundColor(.red)
             }
