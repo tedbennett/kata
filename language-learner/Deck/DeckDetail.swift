@@ -14,13 +14,14 @@ struct DeckDetail: View {
     @State var showModalView = false
     @State var startReview = false
     @ObservedObject var deck: Deck
-    var percentage: Double
+    var percentage: Double {
+        deck.cardArray.reduce(0.0) { sum, card in
+            sum + card.learned
+        } / Double(deck.cardArray.isEmpty ? 1 : deck.cardArray.count)
+    }
     
     init(deck: Deck) {
         self.deck = deck
-        var learnedSum = 0.0
-        deck.cardArray.forEach {learnedSum += $0.learned}
-        self.percentage = learnedSum / Double(deck.cardArray.count)
     }
     
     var body: some View {
@@ -32,19 +33,18 @@ struct DeckDetail: View {
                         Text("\(Int(percentage * 100))%").font(.largeTitle)
                         Text("Learned")
                     }
-                }
-                    
-                .frame(height: 150)
+                }.frame(height: 150)
+                
                 Text("\(deck.cardArray.count) cards - Review due in 3 days")
                     .padding(20)
             }.padding(20)
             
             ForEach(deck.cardArray.sorted(by: {card1, card2 in
                 card1.learned > card2.learned
-            })
-            , id: \.self) { card in
+            }), id: \.self) { card in
                 CardView(card: card)
-            }.onDelete(perform: { idxSet in
+            }
+            .onDelete(perform: { idxSet in
                 let card = self.deck.cardArray[idxSet.first!]
                 self.managedObjectContext.delete(card)
                 try! self.managedObjectContext.save()

@@ -54,12 +54,6 @@ struct MonthStatsView_Previews: PreviewProvider {
     }
 }
 
-
-struct ReviewScore {
-    var date: Date
-    var numCards: Int
-}
-
 func getNumCardsCalendar(scores: [Review]) -> [[Int]] {
     let scoresDict = getCalendarDict(from: scores)
     let thisMonday = Date().startOfWeek

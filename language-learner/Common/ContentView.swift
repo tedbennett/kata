@@ -13,20 +13,21 @@ struct ContentView: View {
     @FetchRequest(entity: Deck.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Deck.name, ascending: true)]) var decks: FetchedResults<Deck>
 
     var body: some View {
-        TabView {
-            HomeView(decks: decks).tabItem {
-                Text("Home")
-                Image(systemName: "house.fill")
-            }
-            DeckView(decks: decks).tabItem {
-                Text("Decks")
-                Image(systemName: "rectangle.fill.on.rectangle.angled.fill")
-            }
-            StatsView(decks: decks).tabItem {
-                Text("Stats")
-                Image(systemName: "chart.bar.fill")
-            }
-        }
+//        TabView {
+//            HomeView(decks: decks).tabItem {
+//                Text("Home")
+//                Image(systemName: "house.fill")
+//            }
+            DeckView(decks: decks)
+//                .tabItem {
+//                Text("Decks")
+//                Image(systemName: "rectangle.fill.on.rectangle.angled.fill")
+//            }
+//            StatsView(decks: decks).tabItem {
+//                Text("Stats")
+//                Image(systemName: "chart.bar.fill")
+//            }
+//        }
     }
 }
 
