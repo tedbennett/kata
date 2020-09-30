@@ -28,6 +28,7 @@
 		9F51A2DD2524E90A00E47630 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51A2D92524E90A00E47630 /* Card+CoreDataClass.swift */; };
 		9F51A2DE2524E90A00E47630 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51A2DA2524E90A00E47630 /* Card+CoreDataProperties.swift */; };
 		9F51A2E12524F9B700E47630 /* ScoreCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51A2E02524F9B700E47630 /* ScoreCard.swift */; };
+		9F51A2E52525328C00E47630 /* AnswerResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F51A2E42525328C00E47630 /* AnswerResultView.swift */; };
 		9F66FE402498B69800DE0F48 /* CalendarStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F66FE3F2498B69800DE0F48 /* CalendarStatsView.swift */; };
 		9F66FE422498D8EB00DE0F48 /* PercentageWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */; };
 		9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */; };
@@ -60,6 +61,7 @@
 		9F51A2D92524E90A00E47630 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9F51A2DA2524E90A00E47630 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F51A2E02524F9B700E47630 /* ScoreCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCard.swift; sourceTree = "<group>"; };
+		9F51A2E42525328C00E47630 /* AnswerResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultView.swift; sourceTree = "<group>"; };
 		9F66FE3F2498B69800DE0F48 /* CalendarStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStatsView.swift; sourceTree = "<group>"; };
 		9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageWheelView.swift; sourceTree = "<group>"; };
 		9F7D42C124938C67003FA006 /* Deck+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deck+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		9F4ABF882497D3B100889E48 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9F51A2E42525328C00E47630 /* AnswerResultView.swift */,
 				9F51A2E02524F9B700E47630 /* ScoreCard.swift */,
 				9F4D3074251E66F700B9E6D6 /* ScoreLineGraphView.swift */,
 				9F66FE412498D8EB00DE0F48 /* PercentageWheelView.swift */,
@@ -274,6 +277,7 @@
 				9F51A2DD2524E90A00E47630 /* Card+CoreDataClass.swift in Sources */,
 				9F7D42C324938C67003FA006 /* Deck+CoreDataClass.swift in Sources */,
 				9F4ABF7A2497976900889E48 /* CustomTextField.swift in Sources */,
+				9F51A2E52525328C00E47630 /* AnswerResultView.swift in Sources */,
 				9F0342BD24916FB300174771 /* ContentView.swift in Sources */,
 				9FFEB0602494069E000EC266 /* ReviewView.swift in Sources */,
 				9F0342D524927BDA00174771 /* DeckDetail.swift in Sources */,

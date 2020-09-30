@@ -19,6 +19,7 @@ struct ReviewView: View {
     
     @State private var reviewFinished = false
     @Binding var reviewInProgress: Bool
+    @State private var answerCorrect: Bool?
     
     var currentCard: Card {
         return cards[currentIdx]
@@ -26,26 +27,41 @@ struct ReviewView: View {
     
     var body: some View {
         VStack {
-            ProgressBar(current: $currentIdx, total: cards.count).frame(height: 10)
-                .animation(.easeInOut(duration: 0.6))
             
-            Spacer()
-            Text(currentCard.front).font(.largeTitle).multilineTextAlignment(.center)
-            Spacer()
-            
-            CustomTextField(text: $textField, language: deck.language, autocorrect: true, textAlignment: .center, textSize: 32.0, returnKeyType: .done, isFirstResponder: true, changeHandler: { (newString) in
-            }, onCommitHandler: { text in
-                updateCard(correct: text == self.currentCard.back)
-                if self.currentIdx < self.cards.count - 1 {
-                    self.textField = ""
-                    self.currentIdx += 1
-                } else {
-                    reviewFinished = true
-                    reviewInProgress = false
+            ZStack {
+                VStack {
+                    ProgressBar(current: $currentIdx, total: cards.count).frame(height: 10).blur(radius: answerCorrect != nil ? 3.0 : 0.0)
+                        .animation(.easeInOut(duration: 0.6))
+                    Spacer()
+                    Text(currentCard.front).font(.largeTitle).multilineTextAlignment(.center).blur(radius: answerCorrect != nil ? 3.0 : 0.0).animation(.easeInOut(duration: 0.2))
+                    Spacer()
+                    
+                    CustomTextField(text: $textField, language: deck.language, autocorrect: true, textAlignment: .center, textSize: 32.0, returnKeyType: .done, isFirstResponder: true, changeHandler: { (newString) in
+                    }, onCommitHandler: { text in
+                        updateCard(correct: text == self.currentCard.back)
+                        if self.currentIdx < self.cards.count - 1 {
+                            self.textField = ""
+                            self.currentIdx += 1
+                        } else {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            reviewFinished = true
+                            reviewInProgress = false
+                            }
+                        }
+                    })
+                    Spacer()
+                    Spacer()
                 }
-            })
-            Spacer()
-            Spacer()
+                if answerCorrect != nil {
+                    VStack {
+                        Spacer()
+                    AnswerResultView(correctAnswer: answerCorrect!)
+                        .transition(.opacity)
+                        .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: answerCorrect!)
+                        
+                    }
+                }
+            }
             
         }.navigationBarTitle("Review", displayMode: .inline)
         .sheet(isPresented: $reviewFinished, content: {
@@ -54,28 +70,13 @@ struct ReviewView: View {
     }
     
     func updateCard(correct: Bool) {
+        answerCorrect = correct
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            answerCorrect = nil
+        }
         currentCard.lastScore = correct
         try! self.managedObjectContext.save()
     }
-    
-    //func finishReview() {
-        // Collect scores and create review object
-       // let calendar = Calendar.current
-//        // If deck has been reviewed, update db
-//        if let review = self.deck.reviewsArray.filter({ $0.date == calendar.startOfDay(for:Date()) }).first {
-//            review.numCards += Int16(self.cards.count)
-//            review.score += self.totalScore
-//        } else {
-//            //otherwise new db entry
-//            let review = Review(context: self.managedObjectContext)
-//
-//            review.date = calendar.startOfDay(for:Date())
-//            review.numCards = Int16(self.cards.count)
-//            review.score = self.totalScore
-//            review.parent = self.deck
-//        }
-
-//    }
 }
 
 struct ProgressBar: View {
