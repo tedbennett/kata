@@ -31,9 +31,7 @@ struct DeckDetail: View {
                         Text("Learned")
                     }
                 }.frame(height: 150)
-                
-                Text("\(deck.cardArray.count) cards - Review due in 3 days")
-                    .padding(20)
+                Text("Last Review:").font(.title).padding(.top, 20)
             }.padding(20)
             
             ForEach(deck.cardArray.sorted(by: {card1, card2 in
@@ -49,18 +47,21 @@ struct DeckDetail: View {
             
         }.navigationBarTitle(Text(deck.name))
         .navigationBarItems(trailing:
-                                HStack { NavigationLink(destination: ReviewView(deck: self.deck, cards: self.deck.cardArray.shuffled())) {
-                                    Text("Review")
-                                }
-                                Spacer()
-                                Spacer()
-                                Button(action: {
-                                    self.showModalView.toggle()
-                                }, label: {
-                                    Image(systemName: "plus").imageScale(.large)
-                                }).sheet(isPresented: $showModalView) {
-                                    AddCardView(parentDeck: self.deck)
-                                }})
+                                HStack {
+                                    NavigationLink(destination: ReviewView(deck: self.deck, cards: self.deck.cardArray.shuffled())) {
+                                        Text("Review")
+                                    }.disabled(deck.cardArray.isEmpty)
+                                    Spacer()
+                                    Spacer()
+                                    Button(action: {
+                                        self.showModalView.toggle()
+                                    }, label: {
+                                        Image(systemName: "plus").imageScale(.large)
+                                    }).sheet(isPresented: $showModalView) {
+                                        AddCardView(parentDeck: self.deck)
+                                    }
+                                    
+                                })
     }
 }
 
