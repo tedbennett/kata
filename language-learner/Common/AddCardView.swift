@@ -11,69 +11,72 @@ import SwiftUI
 struct AddCardView: View {
     @Environment(\.presentationMode) private var presentationMode
     
-    @State private var front = ""
-    @State private var back = ""
-    @State private var failedSave = false
+    @State var parentDeck : Deck
+    @State var tempDeck = TempDeck()
     
-    var parentDeck : Deck
-    
-    init(parentDeck: Deck) {
-        self.parentDeck = parentDeck
-
+    struct TempDeck {
+        struct TempCard: Identifiable {
+            var id = UUID()
+            var front = ""
+            var back = ""
+        }
+        var cards = [TempCard()]
     }
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text(""), footer: Text("Make sure both fields are filled in").foregroundColor(failedSave ? .red : .clear)) {
-                    CustomTextField(text: self.$front, placeholder: "Front", isFirstResponder: true, changeHandler: { (newString) in
-                        DispatchQueue.main.async {
-                            // prevents modifying state during view update
-                            self.front = newString
-                        }
-                    })
-                    CustomTextField(text: self.$back, placeholder: "Back", language: self.parentDeck.language, changeHandler: { (newString) in
-                        //DispatchQueue.main.async {
-                        //self.back = newString
-                        //}
-                    }, onCommitHandler: { newString in
-                        self.back = newString
-                    })
-                    
+                ForEach(self.tempDeck.cards.indices, id:\.self) { idx in
+                    Section(header: Text("Card \(idx + 1)")) {
+                        CustomTextField(text: $tempDeck.cards[idx].front, placeholder: "Front", autocorrect: false, returnKeyType: .next, changeHandler: {str in
+                            tempDeck.cards[idx].front = str
+                        })
+                        CustomTextField(text: $tempDeck.cards[idx].back, placeholder: "Back", language: parentDeck.language, autocorrect: false, returnKeyType: .next, changeHandler: {str in
+                            tempDeck.cards[idx].back = str
+                        })
+                    }
                 }
+                Button(action: {
+                    tempDeck.cards.append(TempDeck.TempCard())
+                }, label: {
+                    Text("Add Another Card")
+                })
+                
             }.navigationBarTitle(Text("Add New Card"))
-                .navigationBarItems(
-                    leading: Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {Text("Cancel")}),
-                    trailing: Button(action: {
-                        if (self.front == "") || (self.back == "") {
-                            self.failedSave = true
-                            return
-                        }
-                        let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                        let card = Card(context: viewContext)
-                        card.front = self.front
-                        card.back = self.back
-                        card.id = UUID()
-                        card.learned = 0.0
-                        card.parent = self.parentDeck
-                        
-                        do {
-                            try viewContext.save()
-                            print("Order saved.")
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {Text("Save")}))
+            .navigationBarItems(trailing: Button(action: {
+                    saveCards()
+                }, label: {Text("Done")}))
             
         }
     }
+    
+    func saveCards() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        tempDeck.cards.forEach { card in
+            if !card.front.isEmpty && !card.back.isEmpty {
+                let newCard = Card(context: context)
+                newCard.front = card.front
+                newCard.back = card.back
+                newCard.id = UUID()
+                newCard.learned = 0.0
+                newCard.parent = self.parentDeck
+                newCard.lastScore = false
+            }
+        }
+        do {
+            try context.save()
+            print("Order saved.")
+        } catch {
+            print(error.localizedDescription)
+        }
+        self.presentationMode.wrappedValue.dismiss()
+    }
 }
 
-//struct AddCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddCardView()
-//    }
-//}
+struct AddCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let deck = Deck(context: viewContext)
+        AddCardView(parentDeck: deck)
+    }
+}

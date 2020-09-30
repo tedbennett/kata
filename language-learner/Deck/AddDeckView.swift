@@ -23,14 +23,16 @@ struct AddDeckView: View {
         Form {
             Section(header: Text("Details").font(.headline)) {
                 TextField("Name", text: $deck.name)
-                Picker(selection: $deck.languageIndex, label: Text("Language")) {
-                    ForEach(0 ..< languages.count) {
-                        Text(languages[$0]).tag($0 as Int?)
-                    }
-                }
+                
                 TextField("Description (Optional)", text: $deck.description)
             }
             
+            Picker(selection: $deck.languageIndex, label: Text("")) {
+                ForEach(0 ..< languages.count) {
+                    Text(languages[$0]).tag($0 as Int?)
+                }
+            }.pickerStyle(SegmentedPickerStyle())
+        
             ForEach(self.deck.cards.indices, id:\.self) { idx in
                 Section(header: Text("Card \(idx + 1)")) {
                     TextField("Front", text: self.$deck.cards[idx].front)

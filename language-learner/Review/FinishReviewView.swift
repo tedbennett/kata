@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct FinishReviewView: View {
+    @Environment(\.presentationMode) var presentation
     var deck: Deck
     var percentage: Double {
         deck.cardArray.reduce(0.0) { sum, card in
@@ -33,6 +34,11 @@ struct FinishReviewView: View {
                 }
             }
         }.navigationBarTitle("Results")
+        .navigationBarItems(trailing: Button {
+            presentation.wrappedValue.dismiss()
+        } label: {
+            Text("Done")
+        })
         .transition(.identity)
         }
     }

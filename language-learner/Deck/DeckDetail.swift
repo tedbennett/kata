@@ -11,9 +11,11 @@ import SwiftUI
 struct DeckDetail: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
     @Environment(\.presentationMode) var presentation
+    
     @State var showAddCards = false
     @State var showingReview = false
     @ObservedObject var deck: Deck
+    
     var percentage: Double {
         Double(deck.cardArray.filter { $0.lastScore}.count) / Double(deck.cardArray.isEmpty ? 1 : deck.cardArray.count)
     }
@@ -21,6 +23,7 @@ struct DeckDetail: View {
     var body: some View {
         List{
             
+            // Deck Header and Stats
             VStack {
                 
                 // Workaround getting home view to pop
@@ -37,6 +40,8 @@ struct DeckDetail: View {
                 }.frame(height: 150)
                 Text("Last Review:").font(.title).padding(.top, 20)
             }.padding(20)
+            
+            // List of Cards
             
             ForEach(deck.cardArray.filter {!$0.lastScore}) { card in
                 ScoreCard(card: card)
@@ -73,7 +78,8 @@ struct DeckDetail: View {
                                     }).sheet(isPresented: $showAddCards) {
                                         AddCardView(parentDeck: self.deck)
                                     }
-                                })
+                                }
+        )
     }
 }
 
