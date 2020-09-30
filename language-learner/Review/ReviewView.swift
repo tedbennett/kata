@@ -28,10 +28,6 @@ struct ReviewView: View {
     }
     
     var body: some View {
-        containedView()
-    }
-    
-    func containedView() -> AnyView {
         switch reviewFinished {
             case false:
                 return AnyView(VStack {

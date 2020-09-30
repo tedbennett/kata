@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+
+// UNUSED
+
 struct StatsView: View {
     @State private var goal = UserDefaults.standard.integer(forKey: "DailyGoal")
     @ObservedObject var userSettings = UserSettings()

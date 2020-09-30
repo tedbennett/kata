@@ -20,12 +20,9 @@ struct DeckDetail: View {
         } / Double(deck.cardArray.isEmpty ? 1 : deck.cardArray.count)
     }
     
-    init(deck: Deck) {
-        self.deck = deck
-    }
-    
     var body: some View {
         List{
+            
             VStack {
                 ZStack {
                     PercentageWheelView(percentage: percentage, lineWidth: 20)
@@ -51,19 +48,19 @@ struct DeckDetail: View {
             })
             
         }.navigationBarTitle(Text(deck.name))
-            .navigationBarItems(trailing:
-                HStack { NavigationLink(destination: ReviewView(deck: self.deck, cards: self.deck.cardArray.shuffled())) {
-                    Text("Review")
-                    }
-                    Spacer()
-                    Spacer()
-                    Button(action: {
-                        self.showModalView.toggle()
-                    }, label: {
-                        Image(systemName: "plus").imageScale(.large)
-                    }).sheet(isPresented: $showModalView) {
-                        AddCardView(parentDeck: self.deck)
-                    }})
+        .navigationBarItems(trailing:
+                                HStack { NavigationLink(destination: ReviewView(deck: self.deck, cards: self.deck.cardArray.shuffled())) {
+                                    Text("Review")
+                                }
+                                Spacer()
+                                Spacer()
+                                Button(action: {
+                                    self.showModalView.toggle()
+                                }, label: {
+                                    Image(systemName: "plus").imageScale(.large)
+                                }).sheet(isPresented: $showModalView) {
+                                    AddCardView(parentDeck: self.deck)
+                                }})
     }
 }
 
