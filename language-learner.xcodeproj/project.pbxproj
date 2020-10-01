@@ -423,6 +423,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"language-learner/Preview Content\"";
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				ENABLE_PREVIEWS = YES;
@@ -432,7 +433,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "TedB.language-learner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tedbennett.kata;
 				PRODUCT_NAME = "Language Learner";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -444,6 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"language-learner/Preview Content\"";
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				ENABLE_PREVIEWS = YES;
@@ -453,7 +455,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "TedB.language-learner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tedbennett.kata;
 				PRODUCT_NAME = "Language Learner";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
