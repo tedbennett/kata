@@ -1,14 +1,15 @@
-# Language Learning
+# Kata
 
 ## Description
 
-This is a flashcard app to help learn languages, with the emphasis in learning how to type in another language (most helpful for a language with a different keyboard than one you are familiar with). Instead of giving an indication of how well you remember the word on the front of the flashcard (e.g "Fail, Hard, Easy"), you must instead correctly type out the reverse of the card. I personally find this helps reinforce learning, and has the bonus of improving typing skills.
+Kata a flashcard app to help learn languages, with the emphasis in learning how to type in another language (most helpful for a language with a different alphabet than one you know). Instead of giving an indication of how well you remember the word on the front of the flashcard (e.g "Fail, Hard, Easy"), you must instead correctly type out the reverse of the card. I personally find this helps reinforce learning, and has the bonus of improving typing skills.
 
 ## Future Work
 **Near future**
 - Stats view - past review scores, daily trends etc.
 - "Learned" percentage (see below)
 - Firebase/GCloud Machine Translation suggestions when creating cards
+- Push notifications to remind the user to review their cards
 
 **Further down the road**
 - Simplify deck creation
